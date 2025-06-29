@@ -1,0 +1,78 @@
+:root {
+    --primary-color-blue: #49bce2;
+    --primary-color-yellow: #f7d800;
+}
+
+.doctor-schedule-container {
+    border-right: 1px solid grey;
+    height: 100%;
+    .all-schedule {
+        select {
+            border-bottom: 2px solid grey;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            cursor: pointer;
+            padding: 4px 0;
+            color: #337ab7;
+            font-weight: 600;
+            option {
+                cursor: pointer;
+            }
+        }
+    }
+    .all-available-time {
+        .text-calendar {
+            margin: 10px 0px;
+            color: #333;
+            i {
+                margin-bottom: 10px;
+                span {
+                    text-transform: uppercase;
+                    margin-left: 5px;
+                    font-style: inherit !important;
+                }
+            }
+            .time-content {
+                .time-content-btns {
+                    display: flex;
+                    gap: 15px;
+                    flex-wrap: wrap;
+
+                    button {
+                        border: none;
+                        outline: none;
+                        background-color: var(--primary-color-yellow);
+                        min-width: 150px;
+                        min-height: 38px;
+                        border-radius: 3px;
+                        font-weight: 600;
+                        color: #333;
+                        transition: background-color 0.4s, color 0.4s; // Thêm dòng này để giảm tốc độ hover
+
+                        &:hover {
+                            background-color: var(--primary-color-blue);
+                            color: white;
+                        }
+                    }
+                    .btn-vi {
+                        min-width: 120px;
+                    }
+                    .btn-en {
+                        min-width: 150px;
+                    }
+
+                    .no-schedule {
+                        font-style: italic;
+                        font-size: 14px;
+                        color: var(--primary-color-blue);
+                    }
+                }
+                .book-free {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}

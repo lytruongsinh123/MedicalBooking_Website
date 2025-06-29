@@ -1,0 +1,94 @@
+{
+    "home-header": {
+        "speciality": "Medical specialty",
+        "search-doctor": "Find a doctor by specialty",
+        "health-facility": "Health facilities",
+        "select-room": "Choose hospital or room",
+        "doctor": "Doctor",
+        "select-doctor": "Select professional doctor",
+        "package-medical": "Package medical examination",
+        "general-check-health": "General health check-up ",
+        "medical-support": "Support",
+        "welcome": "Welcome"
+    },
+    "home-banner": {
+        "title1": "MEDICAL PLATFORM",
+        "title2": "COMPREHENSIVE HEALTHCARE",
+        "specialty-check-up": "Specialty Check Up",
+        "remote-check-up": "Remote Check Up",
+        "general-check-up": "General Check Up",
+        "medical-test": "Medical Test",
+        "emotion-health": "Mental Health",
+        "dental-check-up": "Dental Check Up"
+    },
+    "menu": {
+        "admin": {
+            "manage-user": "Users System",
+            "manage-doctor": "Manage Doctor",
+            "manage-admin": "Manage Admin",
+            "crud": "CRUD user",
+            "crud-redux": "CRUD user redux",
+            "clinic": "Clinic",
+            "manage-clinic": "Manage Clinic",
+            "specialty": "Specialty",
+            "manage-specialty": "Manage Specialty",
+            "handbook": "Handbook",
+            "manage-handbook": "Manage Handbook"
+        },
+        "doctor": {
+            "manage-schedule": "Manage Schedule",
+            "manage-patient": "Manage Patient",
+            "manage-prescription": "Manage Prescription"
+        }
+    },
+    "manage-user": {
+        "add-new": "Add new user",
+        "email": "Email",
+        "password": "Password",
+        "first-name": "First name",
+        "last-name": "Last name",
+        "address": "Address",
+        "phone-number": "Phone number",
+        "gender": "Gender",
+        "position": "Position",
+        "role": "Role",
+        "image": "Image",
+        "save": "Add new",
+        "edit": "Edit user"
+    },
+    "homepage": {
+        "outstanding-doctor": "Outstanding doctor",
+        "more-info": "More Infor"
+    },
+    "manage-schedule": {
+        "title": "Manage Schedule",
+        "select-doctor": "Select doctor",
+        "select-date": "Select date",
+        "time": "Time",
+        "save": "Save information",
+        "price": "Price"
+    },
+    "patient": {
+        "detail-doctor": {
+            "schedule": "Schedule",
+            "no-schedule": "The doctor does not have an appointment during this time, please choose another time!",
+            "choose": "Choose ",
+            "book-free": "and book (free)"
+        }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more information doctors",
+            "select-doctor": "Select doctor",
+            "intro": "Introduction information",
+            "add": "Create information",
+            "save": "Save information",
+            "price" : "Price",
+            "payment" : "Payment",
+            "province": "Province",
+            "nameclinic": "Clinic name",
+            "addressclinic": "Clinic address",
+            "note": "Note"
+        }
+    }
+}

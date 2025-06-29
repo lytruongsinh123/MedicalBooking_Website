@@ -1,0 +1,207 @@
+:root {
+    --primary-color-blue: #49bce2;
+    --primary-color-yellow: #f7d800;
+}
+
+.home_header-container {
+    height: 75px;
+    width: 100%;
+    padding: 0 20px;
+    border: 2px solid var(--primary-color-yellow);
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1001;
+    .home-header-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        .left-content {
+            width: 20%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            i {
+                font-size: 25px;
+                color: grey;
+            }
+            .header-logo {
+                background: url("../../assets/images/bookingcare-2020.svg") center center no-repeat;
+                background-size: 80%;
+                height: 100%;
+                width: 100%;
+                margin-left: 15px;
+            }
+        }
+        .center-content {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .child-content {
+                cursor: pointer;
+                border: 1.5px solid var(--primary-color-blue);
+                padding: 6px;
+                border-radius: 10px;
+                transition: background 0.2s;
+                .hhhhhh {
+                    display: flex;
+                    justify-content: center;
+                }
+                .sub-titles {
+                    font-weight: 400;
+                    font-size: 12px; // ✅ Có đơn vị
+                    opacity: 0; // ✅ Ẩn mặc định
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: opacity 0.6s ease, max-height 0.6s ease;
+                }
+
+                &:hover {
+                    background-color: rgba(73, 188, 226, 0.1);
+                    .sub-titles {
+                        opacity: 1;
+                        max-height: 50px; // ✅ hiện ra khi hover
+                    }
+                }
+            }
+        }
+        .right-content {
+            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .support {
+                padding-right: 50px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                i {
+                    font-size: 25px;
+                    color: #bcb6b6;
+                    margin-right: 10px;
+                    cursor: pointer;
+                }
+            }
+            .language-vn {
+                cursor: pointer;
+                opacity: 0.3;
+                &.active {
+                    color: var(--primary-color-blue);
+                    opacity: 1;
+                }
+            }
+            .language-en {
+                margin: 0 10px;
+                cursor: pointer;
+                opacity: 0.3;
+                &.active {
+                    color: var(--primary-color-blue);
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+.home-header-banner {
+    background-image: url("../../assets/images/bookingcare-cover-4.jpg");
+    height: 460px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    // margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    .content-up {
+        height: 65%;
+        padding-top: 15px;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
+        .title1 {
+            margin-top: 25px;
+            font-size: 35px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 1px #333;
+            margin-bottom: 5px;
+        }
+        .title2 {
+            text-align: center;
+            font-size: 35px;
+            text-shadow: 1px 1px 1px #333;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .search {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            padding: 10px;
+            width: 500px;
+            border-radius: 35px;
+            background-color: #f7d800;
+            i {
+                font-size: 20px;
+                color: grey;
+                margin: 0 5px;
+                cursor: pointer;
+                &:hover {
+                    color: black;
+                }
+            }
+            input {
+                height: 30px;
+                width: 450px;
+                border: none;
+                background: transparent;
+                outline: none;
+            }
+        }
+    }
+    .content-down {
+        height: 35%;
+        justify-content: center;
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 10px;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.9),
+            rgba(255, 255, 255, 1)
+        );
+        .options {
+            text-align: center;
+            display: flex;
+            grid-gap: 50px;
+            justify-content: center;
+            .options-child {
+                width: 125px;
+                .icon-child {
+                    background-color: white;
+                    width: 45px;
+                    height: 45px;
+                    padding: 10px;
+                    border-radius: 50%;
+                    margin: 0 auto;
+                    text-align: center;
+                    border: 2px solid #49bce2;
+                    i {
+                        color: #49bce2;
+                        font-size: 20px;
+                    }
+                }
+                .text-child {
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    &:hover {
+                        color: #49bce2;
+                    }
+                }
+            }
+        }
+    }
+}

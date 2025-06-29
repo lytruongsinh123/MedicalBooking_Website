@@ -1,0 +1,212 @@
+.footer {
+    padding: 20px;
+    background: grey;
+    color: white;
+    padding: 60px 20px;
+    font-family: sans-serif;
+
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-around;
+    }
+
+    &__section {
+        flex: 1 1 200px;
+        max-width: 300px;
+
+        h3 {
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color-yellow); // Tiêu đề màu vàng
+        }
+
+        p,
+        small,
+        li {
+            color: #ccc;
+            font-size: 17px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2;
+
+            li a {
+                color: #ccc;
+                text-decoration: none;
+                font-size: 17px;
+                text-decoration: underline; // Gạch chân khi hover
+
+                &:hover {
+                    color: var(--primary-color-yellow); // Hover sang vàng
+                }
+            }
+        }
+    }
+
+    &__line {
+        height: 2px;
+        width: 30px;
+        background: var(--primary-color-blue); // Đường kẻ màu xanh
+        margin-bottom: 20px;
+    }
+
+    &__socials {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+        .icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            i {
+                color: white;
+                font-size: 20px;
+            }
+            background-color: var(--primary-color-yellow);
+            &:hover {
+                background-color: var(--primary-color-blue);
+            }
+        }
+        a {
+            background: var(--primary-color-blue);
+            padding: 10px;
+            border-radius: 50%;
+            color: white;
+            &:hover {
+                background: var(--primary-color-yellow);
+                color: #0c0f1a;
+            }
+        }
+    }
+
+    &__news-item {
+        display: flex;
+        margin-bottom: 15px;
+
+        .image1 {
+            width: 200px;
+            height: 100px;
+            background-image: url("../../assets/handbook/170056-nha-khoa-nieng-rang-tra-gop-tphcm.png");
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        .image2 {
+            width: 200px;
+            height: 100px;
+            background-image: url("../../assets/handbook/good-health-long-life-blue-good-health-long-life-blue-background-355265459.webp");
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+        p {
+            margin: 0;
+            color: #ccc;
+        }
+    }
+
+    &__contact li {
+        margin-bottom: 10px;
+
+        i {
+            margin-right: 10px;
+            color: var(--primary-color-blue); // Icon liên hệ màu xanh
+        }
+    }
+
+    &__bottom {
+        text-align: center;
+        margin-top: 40px;
+
+        a {
+            color: var(--primary-color-blue);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--primary-color-yellow);
+            }
+        }
+
+        i {
+            color: var(--primary-color-yellow); // Trái tim màu vàng
+            margin: 0 5px;
+        }
+    }
+}
+.custom-input {
+    padding: 12px 16px;
+    width: 250px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-color-blue); /* tím nhạt */
+    box-shadow: 0 0 5px rgba(90, 103, 216, 0.5);
+}
+
+.custom-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.single-btn {
+    margin-top: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.single-btn a {
+    display: inline-block;
+    position: relative; /* giữ relative để ::before hoạt động */
+    font-size: 15px;
+    text-decoration: none;
+    padding: 5px 10px;
+    font-family: "Montserrat", sans-serif;
+    background: var(--primary-color-blue);
+    border: 2px solid #fff;
+    overflow: hidden;
+    transition: color 0.4s ease-in-out;
+    border-radius: 8px; /* ← Bo góc ở đây */
+}
+
+.single-btn a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color-yellow);
+    z-index: 0;
+    transition: left 0.4s ease-in-out;
+}
+
+.single-btn a:hover::before {
+    left: 0;
+}
+
+.single-btn a span {
+    position: relative;
+    color: #fff;
+    z-index: 1;
+    transition: color 0.4s ease-in-out;
+}
+
+.single-btn a:hover span {
+    color: #344360;
+}

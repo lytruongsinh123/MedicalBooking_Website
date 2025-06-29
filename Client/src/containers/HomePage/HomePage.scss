@@ -1,0 +1,180 @@
+.slick-prev {
+    left: -25px !important;
+    z-index: 1000;
+    height: 48px !important;
+    width: 44px !important;
+    background: white !important;
+    border: 2px solid #d7d7d7 !important;
+    border-radius: 8px;
+    &:hover {
+        background: #d7d7d7 !important;
+    }
+}
+.slick-prev::before {
+    color: #49bce2 !important;
+}
+
+.slick-next {
+    right: -25px !important;
+    height: 48px !important;
+    width: 44px !important;
+    background: white !important;
+    border: 2px solid #d7d7d7 !important;
+    border-radius: 8px;
+    &:hover {
+        background: #d7d7d7 !important;
+    }
+}
+.slick-disabled {
+    display: none !important;
+}
+.slick-next::before {
+    color: #49bce2 !important;
+}
+
+:root {
+    --primary-color: #49bce2;
+}
+
+.section-share {
+    &.section-specialty {
+        background: #f5f5f5;
+    }
+    &.section-outstanding-doctor {
+        background: #f5f5f5;
+    }
+    &.section-about {
+        height: 500px !important;
+        padding: 0 100px;
+        .section-about-header {
+            border-top: 2px solid grey;
+            padding: 20px 10px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .section-about-content {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            .content-left {
+                width: 60%;
+                height: auto;
+                border-radius: 10px;
+            }
+            .content-right {
+                width: 40%;
+                height: auto;
+                .logo {
+                    background: url("../../assets/images/bookingcare-2020.svg") center center
+                        no-repeat;
+                    background-size: 80%;
+                    height: 100px;
+                    width: 400px;
+                    margin-left: 15px;
+                }
+                p {
+                    padding: 10px;
+                    font-size: 15px;
+                    font-style: italic;
+                    text-align: justify;
+                }
+            }
+        }
+    }
+    .section-body {
+        .section-customize {
+            .bg-image {
+                height: 150px;
+                width: 278px;
+                background-position: center center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-color: #eee;
+                margin: 0 auto;
+                border: 2px solid var(--primary-color);
+                border-radius: 10px;
+                &.section-specialty {
+                    background-image: url("../../assets/specialty/Musculoskeleton_depart.jpg");
+                }
+                &.section-medical-facility {
+                    background-image: url("../../assets/medical_facility/093035-benh-vien-thu-cuc-1.jpg");
+                }
+                &.section-outstanding-doctor {
+                    // background-image: url("../../assets/outstanding_doctor/103848anh-dai-dien-bs.jpg");
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                }
+
+                &.section-handbook {
+                    background-image: url("../../assets/handbook/170056-nha-khoa-nieng-rang-tra-gop-tphcm.png");
+                }
+                &:hover {
+                    border: 2px solid #d7d7d7;
+                }
+            }
+            .name-spacialty {
+                padding: 10px;
+                text-align: center;
+                font-size: 15px;
+            }
+        }
+    }
+}
+.section-share {
+    height: 330px;
+    .section-container {
+        margin: 0 100px;
+        display: flex;
+        flex-direction: column;
+        .section-header {
+            height: 60px;
+            margin-bottom: 30px;
+            padding-top: 30px;
+            .title-section {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                font-family: "Montserrat", sans-serif;
+            }
+            .btn-section {
+                background-color: #ebeded;
+                padding: 10px 15px;
+                border-radius: 8px;
+                border: none;
+                outline: none;
+                float: right;
+                font-size: 16px;
+                color: black;
+                cursor: pointer;
+                text-transform: uppercase;
+                &:hover {
+                    color: #eee;
+                    background-color: #49bce2;
+                }
+            }
+        }
+    }
+}
+
+.section-outstanding-doctor {
+    .outer-bg {
+        display: flex;
+        justify-self: center;
+        margin-bottom: 10px;
+    }
+    .section-customize {
+        padding: 5px;
+        cursor: pointer;
+        .customize-border {
+            border: 2px solid #d7d7d7;
+            border-radius: 10px;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            &:hover {
+                border: 2px solid yellow;
+            }
+        }
+    }
+}
