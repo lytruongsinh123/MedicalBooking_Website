@@ -1,0 +1,115 @@
+:root {
+    --primary-color-blue: #49bce2;
+    --primary-color-yellow: #f7d800;
+}
+.doctor-extra-infor-container {
+    padding-left: 15px;
+    .content-up {
+        margin-bottom: 10px;
+        .text-address {
+            text-transform: uppercase;
+            color: #333;
+        }
+        .name-clinic {
+            font-weight: 600;
+            padding: 5px 0;
+            color: #333;
+        }
+        .detail-address {
+            font-weight: 600;
+            color: #333;
+        }
+    }
+    .content-down {
+        .short-infor {
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: rgba(73, 188, 226, 0.1);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: opacity 0.4s ease, transform 0.4s ease,
+                max-height 0.4s ease;
+            overflow: hidden;
+
+            &.show {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 100px;
+            }
+
+            &.hide {
+                opacity: 0;
+                transform: translateY(-15px);
+                max-height: 0;
+                margin-bottom: 0;
+                padding: 0 10px;
+            }
+
+            span {
+                color: var(--primary-color-blue);
+                cursor: pointer;
+                transition: color 0.3s ease;
+                &:hover {
+                    text-decoration: underline;
+                    color: var(--primary-color-yellow);
+                }
+            }
+        }
+
+        .detail-content {
+            transition: opacity 0.4s ease, transform 0.4s ease,
+                max-height 0.4s ease;
+            overflow: hidden;
+
+            &.show {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 1000px;
+            }
+
+            &.hide {
+                opacity: 0;
+                transform: translateY(15px);
+                max-height: 0;
+            }
+        }
+        .title-price {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .detail-infor {
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: rgba(73, 188, 226, 0.1);
+            border-radius: 5px 5px 0 0;
+            .price {
+                padding-bottom: 5px;
+                .right {
+                    float: right;
+                }
+            }
+            .note {
+                color: #333;
+            }
+        }
+        .payment {
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: rgba(247, 216, 0, 0.1);
+            border-radius: 0 0 5px 5px;
+        }
+        .hide-price {
+            margin-top: 10px;
+            span {
+                color: var(--primary-color-blue);
+                cursor: pointer;
+                transition: color 0.3s ease;
+                &:hover {
+                    text-decoration: underline;
+                    color: var(--primary-color-yellow);
+                }
+            }
+        }
+    }
+}

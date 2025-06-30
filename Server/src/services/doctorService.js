@@ -120,7 +120,7 @@ let saveDetailInforDoctor = (data) => {
                     //update
                     doctorInfor.doctorId = data.doctorId;
                     doctorInfor.priceId = data.selectedPrice;
-                    doctorInfor.provinceId = data.selectedPrice;
+                    doctorInfor.provinceId = data.selectedProvince;
                     doctorInfor.paymentId = data.selectedPayment;
                     doctorInfor.note = data.note;
                     doctorInfor.addressClinic = data.addressClinic;
@@ -131,7 +131,7 @@ let saveDetailInforDoctor = (data) => {
                     await db.Doctor_Infor.create({
                         doctorId: data.doctorId,
                         priceId: data.selectedPrice,
-                        provinceId: data.selectedPrice,
+                        provinceId: data.selectedProvince,
                         paymentId: data.selectedPayment,
                         note: data.note,
                         addressClinic: data.addressClinic,
@@ -183,6 +183,27 @@ let getDetailDoctorById = (inputId) => {
                             model: db.Allcode,
                             as: "genderData",
                             attributes: ["valueVi", "valueEn"],
+                        },
+                        {
+                            model: db.Doctor_Infor,
+                            attributes: { exclude: ["id", "doctorId"] },
+                            include: [
+                                {
+                                    model: db.Allcode,
+                                    as: "priceTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                                {
+                                    model: db.Allcode,
+                                    as: "provinceTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                                {
+                                    model: db.Allcode,
+                                    as: "paymentTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                            ],
                         },
                     ],
                     raw: false, // trả về dữ liệu thô
