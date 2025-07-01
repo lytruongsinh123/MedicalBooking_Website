@@ -74,6 +74,13 @@
             "no-schedule": "The doctor does not have an appointment during this time, please choose another time!",
             "choose": "Choose ",
             "book-free": "and book (free)"
+        },
+        "extra-infor-doctor" :{
+            "text-address" : "Medical examination address",
+            "price": "Medical examination price: ",
+            "show-detail": "Show details",
+            "payment": "Patients can pay the cost in the following forms: ",
+            "hide-price": "Hide details"
         }
     },
     "admin": {

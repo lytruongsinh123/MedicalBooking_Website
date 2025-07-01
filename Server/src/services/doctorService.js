@@ -309,6 +309,53 @@ let getScheduleByDate = (doctorId, date) => {
         }
     });
 };
+
+let getExtraInforDoctorById = (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing parameter",
+                });
+            } else {
+                let data = await db.Doctor_Infor.findOne({
+                    where: {
+                        doctorId: doctorId,
+                    },
+                    attributes: { exclude: ["id", "doctorId"] },
+                    include: [
+                        {
+                            model: db.Allcode,
+                            as: "priceTypeData",
+                            attributes: ["valueVi", "valueEn"],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: "provinceTypeData",
+                            attributes: ["valueVi", "valueEn"],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: "paymentTypeData",
+                            attributes: ["valueVi", "valueEn"],
+                        },
+                    ],
+                    raw: false,
+                    nest: true
+                });
+                if (!data) data = {};
+                resolve({
+                    errCode: 0,
+                    errMessage: "Get doctor information succeed",
+                    data: data, // trả về thông tin bác sĩ
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -316,4 +363,5 @@ module.exports = {
     getDetailDoctorById: getDetailDoctorById,
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleByDate: getScheduleByDate,
+    getExtraInforDoctorById: getExtraInforDoctorById,
 };

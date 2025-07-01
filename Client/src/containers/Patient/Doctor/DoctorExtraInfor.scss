@@ -45,7 +45,7 @@
                 padding: 0 10px;
             }
 
-            span {
+            .detail {
                 color: var(--primary-color-blue);
                 cursor: pointer;
                 transition: color 0.3s ease;
@@ -53,6 +53,9 @@
                     text-decoration: underline;
                     color: var(--primary-color-yellow);
                 }
+            }
+            .currency {
+                margin: 0 5px;
             }
         }
 
