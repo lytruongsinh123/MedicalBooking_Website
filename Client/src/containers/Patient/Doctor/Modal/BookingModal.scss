@@ -1,0 +1,140 @@
+:root {
+    --primary-color-blue: #49bce2;
+    --primary-color-yellow: #f7d800;
+}
+.booking-modal-container {
+    .booking-modal-content {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        .booking-modal-header {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            .left {
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+            }
+            .right {
+                float: right;
+                cursor: pointer;
+            }
+        }
+        .booking-modal-body {
+            padding: 15px;
+            height: 100%;
+
+            .payment-section {
+                margin: 20px 0;
+                h5 {
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #333;
+                    margin-bottom: 10px;
+                }
+                .payment-option {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    input[type="radio"] {
+                        pointer-events: none; // Vô hiệu hóa click
+                        cursor: not-allowed;
+                    }
+                    label {
+                        color: var(--primary-color-blue);
+                        font-weight: 500;
+                        cursor: not-allowed; // Vô hiệu hóa click trên label
+                    }
+                }
+            }
+
+            .price-table {
+                margin: 20px 0;
+                .table {
+                    margin-bottom: 10px;
+                    td {
+                        padding: 8px 0;
+                        border: none;
+                        border-bottom: 1px solid #eee;
+                    }
+                    .total-row {
+                        border-top: 2px solid #ddd;
+                        td {
+                            border-bottom: none;
+                            padding-top: 10px;
+                        }
+                    }
+                    .text-right {
+                        text-align: right;
+                    }
+                    .text-danger {
+                        color: #dc3545 !important;
+                    }
+                }
+                .note-text {
+                    font-size: 14px;
+                    color: #666;
+                    margin-top: 15px;
+                    font-style: italic;
+                }
+            }
+
+            .notice-section {
+                background-color: #e8f4fd;
+                padding: 15px;
+                border-radius: 5px;
+                margin-top: 20px;
+                h6 {
+                    color: var(--primary-color-blue);
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+                p {
+                    color: #333;
+                    margin-bottom: 10px;
+                    line-height: 1.5;
+                }
+                ul {
+                    color: #333;
+                    li {
+                        margin-bottom: 5px;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+        .booking-modal-footer {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            button {
+                border: none;
+                outline: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+            }
+            .btn-booking-confirm {
+                background-color: var(--primary-color-blue);
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s ease, color 0.3s ease;
+                &:hover {
+                    background-color: #3a9bbf;
+                    color: #333;
+                }
+            }
+            .btn-booking-cancel {
+                background-color: var(--primary-color-yellow);
+                color: #333;
+                cursor: pointer;
+                transition: background-color 0.3s ease, color 0.3s ease;
+                &:hover {
+                    background-color: #f0c200;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
