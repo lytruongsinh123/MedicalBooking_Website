@@ -74,6 +74,7 @@ class BookingModal extends Component {
                                 </div>
                             </div>
 
+
                             <div className="col-6 form-group mt-3">
                                 <label className="text-dark fw-bold">
                                     Địa chỉ email

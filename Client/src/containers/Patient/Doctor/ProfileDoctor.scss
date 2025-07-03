@@ -7,6 +7,35 @@
     margin-bottom: 20px;
     .intro-doctor {
         display: flex;
+        padding: 15px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid transparent;
+
+        &:hover {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            box-shadow: 0 4px 20px rgba(73, 188, 226, 0.15);
+            transform: translateY(-3px);
+            border-color: rgba(73, 188, 226, 0.2);
+
+            .content-left {
+                border-color: var(--primary-color-yellow);
+                box-shadow: 0 0 0 2px rgba(247, 216, 0, 0.3);
+            }
+
+            .content-right {
+                .up {
+                    color: var(--primary-color-blue);
+                }
+
+                .down {
+                    color: #495057;
+                }
+            }
+        }
 
         .content-left {
             background: center center no-repeat;
@@ -16,6 +45,8 @@
             background-size: cover;
             image-rendering: auto;
             border: 3px solid var(--primary-color-blue);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(73, 188, 226, 0.2);
         }
         .content-right {
             width: calc(100% - 80px);
@@ -26,6 +57,8 @@
             .up {
                 font-size: 20px;
                 font-weight: 600;
+                transition: color 0.3s ease;
+                color: #333;
             }
             .down {
                 text-align: justify;
@@ -33,6 +66,8 @@
                 font-size: 13px;
                 color: #867f7f;
                 font-weight: 500;
+                transition: color 0.3s ease;
+                line-height: 1.4;
             }
         }
     }
@@ -40,10 +75,39 @@
         margin-top: 20px;
         font-size: 16px;
         border: 1px solid var(--primary-color-blue);
-        padding: 5px 10px;
-        width: fit-content; // Chỉ bao quanh nội dung
-        display: inline-block; // Hoặc dùng cách này
-        border-radius: 5px;
+        padding: 8px 15px;
+        width: fit-content;
+        display: inline-block;
+        border-radius: 8px;
         cursor: pointer;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        box-shadow: 0 2px 4px rgba(73, 188, 226, 0.1);
+        transition: all 0.3s ease;
+        font-weight: 600;
+        color: #333;
+
+        &:hover {
+            background: linear-gradient(
+                135deg,
+                var(--primary-color-blue) 0%,
+                #3a9bbf 100%
+            );
+            color: white;
+            box-shadow: 0 4px 12px rgba(73, 188, 226, 0.3);
+            transform: translateY(-2px);
+            border-color: #3a9bbf;
+
+            .currency {
+                color: var(--primary-color-yellow);
+                font-weight: bold;
+            }
+        }
+
+        .currency {
+            margin: 0 5px;
+            font-weight: 700;
+            color: var(--primary-color-blue);
+            transition: color 0.3s ease;
+        }
     }
 }
