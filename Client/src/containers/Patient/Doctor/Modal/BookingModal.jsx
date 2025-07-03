@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { Modal } from "reactstrap";
-
+import ProfileDoctor from "../ProfileDoctor";
 import "./BookingModal.scss";
+import _ from "lodash";
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +17,8 @@ class BookingModal extends Component {
     componentDidUpdate = async (prevProps, prevState, snapshot) => {};
     render() {
         let { isOpenModal, CloseBookingModal, dataTime } = this.props;
+        let doctorId =
+            dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : "";
         return (
             <Modal
                 isOpen={isOpenModal}
@@ -26,77 +29,130 @@ class BookingModal extends Component {
             >
                 <div className="booking-modal-content">
                     <div className="booking-modal-header">
-                        <spa className="left">Thông tin đặt lịch khám bệnh</spa>
+                        <span className="left">
+                            Thông tin đặt lịch khám bệnh
+                        </span>
                         <span className="right" onClick={CloseBookingModal}>
                             <i className="fas fa-times"></i>
                         </span>
                     </div>
                     <div className="booking-modal-body">
                         {/* {JSON.stringify(dataTime)} */}
-                        <div className="doctor-infor"></div>
-                        <div className="price">Giá khám 500.000đ</div>
+                        <div className="doctor-infor">
+                            <ProfileDoctor doctorId={doctorId} />
+                        </div>
                         <div className="row">
-                            <div className="col-6 form-group">
-                                <label>Họ tên</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="Nhập họ tên"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Họ và tên
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-user text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        placeholder="Nhập họ tên"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-6 form-group">
-                                <label>Số điện thoại</label>
-                                <input
-                                    className="form-control"
-                                    type="phone"
-                                    placeholder="Nhập số điện thoại"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Số điện thoại
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-phone text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="phone"
+                                        placeholder="Nhập số điện thoại"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-6 form-group">
-                                <label>Địa chỉ email</label>
-                                <input
-                                    className="form-control"
-                                    type="email"
-                                    placeholder="Nhập địa chỉ email"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Địa chỉ email
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-envelope text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="email"
+                                        placeholder="Nhập địa chỉ email"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-6 form-group">
-                                <label>Địa chỉ liên hệ</label>
-                                <input
-                                    className="form-control"
-                                    type="address"
-                                    placeholder="Nhập địa chỉ liên hệ"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Địa chỉ liên hệ
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-map-marker-alt text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="address"
+                                        placeholder="Nhập địa chỉ liên hệ"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-12 form-group">
-                                <label>Lý do khám</label>
-                                <input
-                                    className="form-control"
-                                    type="reason"
-                                    placeholder="Nhập lý do khám"
-                                />
+                            <div className="col-12 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Lý do khám
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-stethoscope text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="reason"
+                                        placeholder="Nhập lý do khám"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-6 form-group">
-                                <label>Đặt cho ai</label>
-                                <input
-                                    className="form-control"
-                                    type="address"
-                                    placeholder="Nhập họ tên người đặt"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Đặt cho ai
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-user-friends text-primary"></i>
+                                    </span>
+                                    <input
+                                        className="form-control"
+                                        type="address"
+                                        placeholder="Nhập họ tên người đặt"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="col-6 form-group">
-                                <label>Giới tính</label>
-                                <input
-                                    className="form-control"
-                                    type="reason"
-                                    placeholder="Nhập giới tính"
-                                />
+                            <div className="col-6 form-group mt-3">
+                                <label className="text-dark fw-bold">
+                                    Giới tính
+                                </label>
+                                <div className="input-group">
+                                    <span className="input-group-text">
+                                        <i className="fas fa-venus-mars text-primary"></i>
+                                    </span>
+                                    <select className="form-control form-select">
+                                        <option value="">Chọn giới tính</option>
+                                        <option value="male">Nam</option>
+                                        <option value="female">Nữ</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 
@@ -128,7 +184,6 @@ class BookingModal extends Component {
                                     Thanh toán bằng thẻ tín dụng
                                 </label>
                             </div>
-
 
                             <div className="payment-option">
                                 <input

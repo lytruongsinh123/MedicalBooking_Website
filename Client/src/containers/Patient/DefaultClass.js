@@ -11,12 +11,6 @@ class DefaultClass extends Component {
 
     // thực hiện mỗi khi props hoặc state thay đổi
     componentDidUpdate = async (prevProps, prevState, snapshot) => {};
-
-    showHideDetailInfor = (status) => {
-        this.setState({
-            isShowDetailInfor: status,
-        });
-    };
     render() {
         return <div></div>;
     }

@@ -1,0 +1,49 @@
+:root {
+    --primary-color-blue: #49bce2;
+    --primary-color-yellow: #f7d800;
+}
+
+.profile-doctor-container {
+    margin-bottom: 20px;
+    .intro-doctor {
+        display: flex;
+
+        .content-left {
+            background: center center no-repeat;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-size: cover;
+            image-rendering: auto;
+            border: 3px solid var(--primary-color-blue);
+        }
+        .content-right {
+            width: calc(100% - 80px);
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+            justify-content: center;
+            .up {
+                font-size: 20px;
+                font-weight: 600;
+            }
+            .down {
+                text-align: justify;
+                font-family: "Montserrat", sans-serif;
+                font-size: 13px;
+                color: #867f7f;
+                font-weight: 500;
+            }
+        }
+    }
+    .price {
+        margin-top: 20px;
+        font-size: 16px;
+        border: 1px solid var(--primary-color-blue);
+        padding: 5px 10px;
+        width: fit-content; // Chỉ bao quanh nội dung
+        display: inline-block; // Hoặc dùng cách này
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}

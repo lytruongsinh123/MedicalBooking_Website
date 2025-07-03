@@ -342,8 +342,83 @@ let getExtraInforDoctorById = (doctorId) => {
                         },
                     ],
                     raw: false,
-                    nest: true
+                    nest: true,
                 });
+                if (!data) data = {};
+                resolve({
+                    errCode: 0,
+                    errMessage: "Get doctor information succeed",
+                    data: data, // trả về thông tin bác sĩ
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let getProfileDoctorById = (doctorId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing parameter",
+                });
+            } else {
+                let data = await db.User.findOne({
+                    where: {
+                        id: doctorId,
+                    },
+                    attributes: {
+                        exclude: ["password"], // không lấy trường password
+                    },
+                    // Join với bảng Markdown để lấy thông tin chi tiết của bác sĩ
+                    include: [
+                        {
+                            model: db.Markdown,
+                            attributes: [
+                                "description",
+                                "contentHTML",
+                                "contentMarkdown",
+                            ],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: "positionData",
+                            attributes: ["valueVi", "valueEn"],
+                        },
+                        {
+                            model: db.Doctor_Infor,
+                            attributes: { exclude: ["id", "doctorId"] },
+                            include: [
+                                {
+                                    model: db.Allcode,
+                                    as: "priceTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                                {
+                                    model: db.Allcode,
+                                    as: "provinceTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                                {
+                                    model: db.Allcode,
+                                    as: "paymentTypeData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                            ],
+                        },
+                    ],
+                    raw: false, // trả về dữ liệu thô
+                    nest: true, // trả về dữ liệu dạng json
+                });
+
+                if (data && data.image) {
+                    data.image = new Buffer.from(data.image, "base64").toString(
+                        "binary",
+                    );
+                }
                 if (!data) data = {};
                 resolve({
                     errCode: 0,
@@ -364,4 +439,5 @@ module.exports = {
     bulkCreateSchedule: bulkCreateSchedule,
     getScheduleByDate: getScheduleByDate,
     getExtraInforDoctorById: getExtraInforDoctorById,
+    getProfileDoctorById: getProfileDoctorById,
 };
