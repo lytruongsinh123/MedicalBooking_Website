@@ -19,7 +19,13 @@ let handleUserLogin = (useremail, password) => {
             let isExist = await checkUserEmail(useremail);
             if (isExist) {
                 let user = await db.User.findOne({
-                    attributes: ["email", "roleId", "password", "firstName", "lastName"], // only show three fields 'email', 'roleId', 'password'
+                    attributes: [
+                        "email",
+                        "roleId",
+                        "password",
+                        "firstName",
+                        "lastName",
+                    ], // only show three fields 'email', 'roleId', 'password'
                     where: {
                         email: useremail,
                     },
@@ -30,7 +36,10 @@ let handleUserLogin = (useremail, password) => {
                     //   }
                 });
                 if (user) {
-                    let checkPassword = await bcrypt.compareSync(password, user.password);
+                    let checkPassword = await bcrypt.compareSync(
+                        password,
+                        user.password
+                    );
                     if (checkPassword) {
                         userData.errCode = 0;
                         userData.errMsg = "Login successful";
@@ -169,7 +178,13 @@ let deleteUser = (userid) => {
 let updateUserData = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.id || !data.roleId || !data.positionId || !data.gender || !data.phoneNumber) {
+            if (
+                !data.id ||
+                !data.roleId ||
+                !data.positionId ||
+                !data.gender ||
+                !data.phoneNumber
+            ) {
                 resolve({
                     errCode: 2,
                     message: "No data provided",
