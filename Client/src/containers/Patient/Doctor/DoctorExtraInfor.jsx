@@ -59,8 +59,7 @@ class DoctorExtraInfor extends Component {
                     <div
                         className={`short-infor ${
                             isShowDetailInfor ? "hide" : "show"
-                        }`}
-                    >
+                        }`}>
                         <FormattedMessage id="patient.extra-infor-doctor.price" />
                         {exTraInfor &&
                             exTraInfor.priceTypeData &&
@@ -86,8 +85,7 @@ class DoctorExtraInfor extends Component {
                             )}
                         <span
                             className="detail"
-                            onClick={() => this.showHideDetailInfor(true)}
-                        >
+                            onClick={() => this.showHideDetailInfor(true)}>
                             <FormattedMessage id="patient.extra-infor-doctor.show-detail" />
                         </span>
                     </div>
@@ -95,8 +93,7 @@ class DoctorExtraInfor extends Component {
                     <div
                         className={`detail-content ${
                             isShowDetailInfor ? "show" : "hide"
-                        }`}
-                    >
+                        }`}>
                         <div className="title-price">
                             <FormattedMessage id="patient.extra-infor-doctor.price" />
                         </div>
@@ -155,8 +152,7 @@ class DoctorExtraInfor extends Component {
                         </div>
                         <div className="hide-price">
                             <span
-                                onClick={() => this.showHideDetailInfor(false)}
-                            >
+                                onClick={() => this.showHideDetailInfor(false)}>
                                 <FormattedMessage id="patient.extra-infor-doctor.hide-price" />
                             </span>
                         </div>

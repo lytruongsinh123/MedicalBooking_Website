@@ -57,8 +57,7 @@ class DetailDoctor extends Component {
                                         ? detailDoctor.image
                                         : ""
                                 })`,
-                            }}
-                        ></div>
+                            }}></div>
                         <div className="content-right">
                             <div className="up">
                                 {language === languages.VI ? nameVi : nameEn}
@@ -93,8 +92,7 @@ class DetailDoctor extends Component {
                                     dangerouslySetInnerHTML={{
                                         __html: detailDoctor.Markdown
                                             .contentHTML,
-                                    }}
-                                ></div>
+                                    }}></div>
                             )}
                     </div>
                     <div className="comment-doctor"></div>

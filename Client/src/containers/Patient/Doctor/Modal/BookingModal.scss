@@ -1,3 +1,16 @@
+// Style cho input Bootstrap trong BookingModal để viền màu #49bce2
+.booking-modal-content .form-control,
+.booking-modal-content .form-select {
+    border: 1.5px solid #49bce2 !important;
+    box-shadow: none;
+    transition: border 0.2s;
+}
+
+.booking-modal-content .form-control:focus,
+.booking-modal-content .form-select:focus {
+    border-color: #49bce2 !important;
+    box-shadow: 0 0 0 2px rgba(73, 188, 226, 0.15);
+}
 :root {
     --primary-color-blue: #49bce2;
     --primary-color-yellow: #f7d800;

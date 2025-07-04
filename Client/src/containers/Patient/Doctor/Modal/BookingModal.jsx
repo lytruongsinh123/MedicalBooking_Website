@@ -25,8 +25,7 @@ class BookingModal extends Component {
                 toggle={this.props.toggleFromParent}
                 className={"booking-modal-container"}
                 size="lg"
-                centered
-            >
+                centered>
                 <div className="booking-modal-content">
                     <div className="booking-modal-header">
                         <span className="left">
@@ -39,7 +38,11 @@ class BookingModal extends Component {
                     <div className="booking-modal-body">
                         {/* {JSON.stringify(dataTime)} */}
                         <div className="doctor-infor">
-                            <ProfileDoctor doctorId={doctorId} />
+                            <ProfileDoctor
+                                doctorId={doctorId}
+                                isShowDescriptionDoctor={false}
+                                dataTime={dataTime}
+                            />
                         </div>
                         <div className="row">
                             <div className="col-6 form-group mt-3">
@@ -73,7 +76,6 @@ class BookingModal extends Component {
                                     />
                                 </div>
                             </div>
-
 
                             <div className="col-6 form-group mt-3">
                                 <label className="text-dark fw-bold">
@@ -256,8 +258,7 @@ class BookingModal extends Component {
                         </button>
                         <button
                             className="btn-booking-cancel"
-                            onClick={CloseBookingModal}
-                        >
+                            onClick={CloseBookingModal}>
                             Cancel
                         </button>
                     </div>

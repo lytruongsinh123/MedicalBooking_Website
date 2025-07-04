@@ -35,7 +35,7 @@ let getTopDoctorHome = (limits) => {
             });
             resolve({
                 errCode: 0,
-                message: "Get top doctor succeed",
+                errMessage: "Get top doctor succeed",
                 data: users, // trả về danh sách bác sĩ
             });
         } catch (e) {
@@ -55,7 +55,7 @@ let getAllDoctors = () => {
             });
             resolve({
                 errCode: 0,
-                message: "Get all doctors succeed",
+                errMessage: "Get all doctors succeed",
                 data: doctors, // trả về danh sách bác sĩ
             });
         } catch (e) {

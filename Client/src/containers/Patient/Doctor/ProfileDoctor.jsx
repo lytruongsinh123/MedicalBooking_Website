@@ -5,6 +5,9 @@ import "./ProfileDoctor.scss";
 import { languages } from "../../../utils/constant";
 import { getProfileInforDoctorById } from "../../../services/userService";
 import NumberFormat from "react-number-format";
+import _ from "lodash";
+import moment from "moment";
+
 class ProfileDoctor extends Component {
     constructor(props) {
         super(props);
@@ -35,9 +38,39 @@ class ProfileDoctor extends Component {
         if (prevProps.doctorId !== this.props.doctorId) {
         }
     };
+    renderTimeBooking = (dataTime) => {
+        let { language } = this.props;
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let date =
+                language == languages.VI
+                    ? moment
+                          .unix(+dataTime.date / 1000)
+                          .format("dddd - DD/MM/YYYY")
+                          .replace(/^./, (str) => str.toUpperCase())
+                    : moment
+                          .unix(+dataTime.date / 1000)
+                          .locale("en")
+                          .format("ddd - MM/DD/YYYY");
+            let time =
+                language === languages.VI
+                    ? dataTime.timeTypeData.valueVi
+                    : dataTime.timeTypeData.valueEn;
+            return (
+                <>
+                    <div>
+                        {time} - {date}
+                    </div>
+                    <div>
+                        Miễn phí đặt lịch
+                    </div>
+                </>
+            );
+        }
+        return <></>;
+    };
     render() {
         let { dataProfile } = this.state;
-        let { language } = this.props;
+        let { language, isShowDescriptionDoctor, dataTime } = this.props;
         let nameVi = "",
             nameEn = "";
         if (dataProfile && dataProfile.positionData) {
@@ -55,19 +88,27 @@ class ProfileDoctor extends Component {
                                     ? dataProfile.image
                                     : ""
                             })`,
-                        }}
-                    ></div>
+                        }}></div>
                     <div className="content-right">
                         <div className="up">
                             {language === languages.VI ? nameVi : nameEn}
                         </div>
                         <div className="down">
-                            {dataProfile.Markdown &&
-                                dataProfile.Markdown.description && (
-                                    <span>
-                                        {dataProfile.Markdown.description}
-                                    </span>
-                                )}
+                            {isShowDescriptionDoctor === true ? (
+                                <>
+                                    {dataProfile.Markdown &&
+                                        dataProfile.Markdown.description && (
+                                            <span>
+                                                {
+                                                    dataProfile.Markdown
+                                                        .description
+                                                }
+                                            </span>
+                                        )}
+                                </>
+                            ) : (
+                                <>{this.renderTimeBooking(dataTime)}</>
+                            )}
                         </div>
                     </div>
                 </div>
