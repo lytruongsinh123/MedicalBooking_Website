@@ -11,6 +11,10 @@
     border-color: #49bce2 !important;
     box-shadow: 0 0 0 2px rgba(73, 188, 226, 0.15);
 }
+.booking-modal-content .input-group {
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
 :root {
     --primary-color-blue: #49bce2;
     --primary-color-yellow: #f7d800;

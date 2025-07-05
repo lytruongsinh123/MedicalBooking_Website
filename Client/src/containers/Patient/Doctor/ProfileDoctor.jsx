@@ -61,7 +61,7 @@ class ProfileDoctor extends Component {
                         {time} - {date}
                     </div>
                     <div>
-                        Miễn phí đặt lịch
+                        <FormattedMessage id="patient.booking-modal.price-booking" />
                     </div>
                 </>
             );
