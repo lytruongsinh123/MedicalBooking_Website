@@ -5,23 +5,41 @@ require("dotenv").config();
 let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.date || !data.timeType) {
+            if (
+                !data.email ||
+                !data.doctorId ||
+                !data.date ||
+                !data.timeType ||
+                !data.fullName
+            ) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing email parameter",
                 });
                 return;
             } else {
-                
+                // Format date sang dd/MM/yyyy
+                let dateString = "";
+                if (data.date) {
+                    const dateObj = new Date(Number(data.date));
+                    const day = String(dateObj.getDate()).padStart(2, "0");
+                    const month = String(dateObj.getMonth() + 1).padStart(
+                        2,
+                        "0"
+                    );
+                    const year = dateObj.getFullYear();
+                    dateString = `${day}/${month}/${year}`;
+                }
                 await emailService.sendSimpleEmail({
                     reciverEmail: data.email,
-                    patientName: data.patientName,
+                    patientName: data.fullName,
                     doctorName: data.doctorName,
-                    time: data.time,
-                    date: data.date,
-                    clinicName: data.clinicName,
+                    time: data.timeString,
+                    birthday: dateString,
+                    language: data.language,
                     redirectLink: `https://www.facebook.com/hung.do.105802`,
                 });
+
                 // upsert patient
                 let user = await db.User.findOrCreate({
                     where: { email: data.email },
