@@ -1,7 +1,12 @@
 import db from "../models/index";
 import emailService from "../services/emailService";
 import _ from "lodash";
+import { v4 as uuidv4 } from "uuid";
 require("dotenv").config();
+let buildUrlEmail = (doctorId, token) => {
+    let result = `${process.env.URL_REACT}/verify-booking?token=${token}&doctorId=${doctorId}`;
+    return result;
+};
 let postBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -30,6 +35,7 @@ let postBookAppointment = (data) => {
                     const year = dateObj.getFullYear();
                     dateString = `${day}/${month}/${year}`;
                 }
+                let token = uuidv4();
                 await emailService.sendSimpleEmail({
                     reciverEmail: data.email,
                     patientName: data.fullName,
@@ -37,7 +43,7 @@ let postBookAppointment = (data) => {
                     time: data.timeString,
                     birthday: dateString,
                     language: data.language,
-                    redirectLink: `https://www.facebook.com/hung.do.105802`,
+                    redirectLink: buildUrlEmail(data.doctorId, token),
                 });
 
                 // upsert patient
@@ -60,6 +66,7 @@ let postBookAppointment = (data) => {
                             doctorId: data.doctorId,
                             date: data.date,
                             timeType: data.timeType,
+                            token: token,
                         },
                     });
                 }
@@ -73,6 +80,49 @@ let postBookAppointment = (data) => {
         }
     });
 };
+let postVerifyBookAppointment = (data) => { 
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(!data.token || !data.doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing parameter",
+                });
+                return;
+            }
+            else {
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        token: data.token,
+                        doctorId: data.doctorId,
+                        statusId: "S1", // Assuming S1 is the status for pending bookings
+                    },
+                    raw: false, // to allow updates => object of sequelize => can use methods like save()
+                    // raw = true => object of json
+                });
+                if (appointment) {
+                    await appointment.update({
+                        statusId: "S2", // Assuming S2 is the status for confirmed bookings
+                    })
+                    resolve({
+                        errCode: 0,
+                        errMessage: "Verify booking appointment successful",
+                    });
+                }
+                else {
+                    resolve({
+                        errCode: 2,
+                        errMessage: "Appointment not found or already confirmed",
+                    });
+                }
+            }
+            
+        } catch (e) {
+            reject(e); // ngay khi chạy reject thì ở Controller sẽ bắt error qua hàm catch
+        }
+    });
+}
 module.exports = {
     postBookAppointment: postBookAppointment,
+    postVerifyBookAppointment: postVerifyBookAppointment,
 };
