@@ -101,9 +101,8 @@ let postVerifyBookAppointment = (data) => {
                     // raw = true => object of json
                 });
                 if (appointment) {
-                    await appointment.update({
-                        statusId: "S2", // Assuming S2 is the status for confirmed bookings
-                    })
+                    appointment.statusId = "S2"; // Assuming S2 is the status for confirmed bookings
+                    await appointment.save(); // save changes to the database
                     resolve({
                         errCode: 0,
                         errMessage: "Verify booking appointment successful",

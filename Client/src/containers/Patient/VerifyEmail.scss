@@ -1,0 +1,127 @@
+.verify-loading-spinner {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border: 7px solid #e0eafc;
+    border-top: 7px solid #219150;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px 0 rgba(33, 145, 80, 0.1);
+    transition: border-top-color 0.2s;
+}
+
+.status-verification.loading .verify-loading-spinner:hover {
+    border-top-color: #1b7a41;
+    box-shadow: 0 4px 20px 0 rgba(33, 145, 80, 0.18);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+// Container styles
+.verify-email-container {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.verify-email-content {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px 0 rgba(0, 0, 0, 0.1);
+    padding: 40px 32px 32px 32px;
+    min-width: 350px;
+    max-width: 95vw;
+    text-align: center;
+    .logo {
+        background: url("../../assets/images/bookingcare-2020.svg") center
+            center no-repeat;
+        background-size: contain;
+        height: 90px;
+        width: 200px;
+        margin: 0 auto 24px auto;
+        display: block;
+    }
+}
+
+.status-verification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-verification.success {
+    color: #219150;
+}
+
+.status-verification.error {
+    color: #d7263d;
+}
+
+.verify-icon {
+    font-size: 70px;
+    margin-bottom: 10px;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s;
+    color: #219150;
+    filter: drop-shadow(0 2px 8px rgba(33, 145, 80, 0.12));
+    cursor: pointer;
+}
+.status-verification.success .verify-icon:hover {
+    color: #1b7a41;
+    transform: scale(1.15) rotate(-6deg);
+    filter: drop-shadow(0 4px 16px rgba(33, 145, 80, 0.18));
+}
+.status-verification.error .verify-icon {
+    color: #d7263d;
+    filter: drop-shadow(0 2px 8px rgba(215, 38, 61, 0.12));
+}
+.status-verification.error .verify-icon:hover {
+    color: #a81c2a;
+    transform: scale(1.15) rotate(6deg);
+    filter: drop-shadow(0 4px 16px rgba(215, 38, 61, 0.18));
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.verify-message {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+    color: #555;
+}
+
+.btn-go-home {
+    display: inline-block;
+    background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px 0 rgba(33, 147, 176, 0.1);
+    transition: background 0.2s, box-shadow 0.2s,
+        transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-go-home:hover {
+    background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
+    box-shadow: 0 4px 16px 0 rgba(33, 147, 176, 0.18);
+    transform: scale(0.96);
+}
