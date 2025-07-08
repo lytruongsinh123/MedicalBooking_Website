@@ -7,6 +7,7 @@ import { editUserService } from "../../services/userService";
 import { getTopDoctorHomeService } from "../../services/userService";
 import { getAllDoctors } from "../../services/userService";
 import { saveDetailInforDoctor } from "../../services/userService";
+import { createNewSpecialtyService } from "../../services/userService";
 import { toast } from "react-toastify";
 export const fetchGenderStart = () => {
     return async (dispatch, getState) => {
@@ -315,6 +316,35 @@ export const fetchAllScheduleTimeFailed = () => ({
     type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILDED,
 });
 
+
+
+
+
+
+
+export const createNewSpecialty = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await createNewSpecialtyService(data);
+            if (res && res.errCode === 0) {
+                dispatch(createSpecialtySuccess());
+                toast.success("Create new specialty succeed!");
+            } else {
+                dispatch(createSpecialtyFailed());
+                toast.error("Create new specialty failed!");
+            }
+        } catch (e) {
+            console.log("Create new specialty success", e);
+            dispatch(createSpecialtyFailed());
+        }
+    };
+};
+export const createSpecialtySuccess = () => ({
+    type: actionTypes.CREATE_SPECIALTY_SUCCESS,
+});
+export const createSpecialtyFailed = () => ({
+    type: actionTypes.CREATE_SPECIALTY_FAILDED,
+});
 
 
 
