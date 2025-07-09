@@ -6,6 +6,7 @@ let createSpecialty = (data) => {
             // Validate input data
             if (
                 !data.name ||
+                !data.nameEn ||
                 !data.imageBase64 ||
                 !data.descriptionHTML ||
                 !data.descriptionMarkdown
@@ -18,6 +19,7 @@ let createSpecialty = (data) => {
             } else {
                 await db.Specialty.create({
                     name: data.name,
+                    nameEn: data.nameEn,
                     image: data.imageBase64,
                     descriptionHTML: data.descriptionHTML,
                     descriptionMarkdown: data.descriptionMarkdown,
@@ -37,7 +39,7 @@ let getAllSpecialty = () => {
         try {
             let data = await db.Specialty.findAll({
                 attributes: {
-                    exclude: ["createdAt", "updatedAt", "id"],
+                    exclude: ["createdAt", "updatedAt"],
                 },
                 // limit: 10,
                 // offset: offset // can be used for pagination

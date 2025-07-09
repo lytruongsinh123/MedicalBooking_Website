@@ -107,9 +107,12 @@
             "price": "Giá khám",
             "payment": "Phương thức thanh toán",
             "province": "Tỉnh thành",
+            "specialty": "Chuyên khoa",
             "nameclinic": "Tên phòng khám",
             "addressclinic": "Địa chỉ phòng khám",
-            "note": "Lưu ý"
+            "note": "Lưu ý",
+            "select-specialty": "Chọn chuyên khoa",
+            "select-clinic": "Chọn phòng khám"
         }
     }
 }

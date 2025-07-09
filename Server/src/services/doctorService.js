@@ -63,25 +63,41 @@ let getAllDoctors = () => {
         }
     });
 };
+let checkRequiredFields = (data) => { 
+    let arrFields = [
+        "doctorId",
+        "contentHTML",
+        "contentMarkdown",
+        "action",
+        "selectedPrice",
+        "selectedPayment",
+        "selectedProvince",
+        "nameClinic",
+        "addressClinic",
+        "note",
+        "specialtyId",
+    ];
+    let isValid = true;
+    let element = "";
+    for (let i = 0; i < arrFields.length; i++) {
+        if (!data[arrFields[i]]) {
+            isValid = false;
+            element = arrFields[i];
+            break;
+        }
+    }
+    return {
+        isValid: isValid,
+        element: element,
+    };
+}
 let saveDetailInforDoctor = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (
-                !data.doctorId ||
-                !data.contentHTML ||
-                !data.contentMarkdown ||
-                !data.action ||
-                !data.selectedPrice ||
-                !data.selectedPayment ||
-                !data.selectedProvince ||
-                !data.nameClinic ||
-                !data.addressClinic ||
-                !data.note
-            ) {
-                // Nếu không có trường ID, contentHTML, contentMarkdown
+            if (checkRequiredFields(data).isValid === false) {
                 resolve({
                     errCode: 1,
-                    errMessage: "Missing parameter",
+                    errMessage: `Missing parameter ${checkRequiredFields(data).element}`,
                 });
             } else {
                 // upsert to Markdown table
@@ -125,6 +141,8 @@ let saveDetailInforDoctor = (data) => {
                     doctorInfor.note = data.note;
                     doctorInfor.addressClinic = data.addressClinic;
                     doctorInfor.nameClinic = data.nameClinic;
+                    doctorInfor.specialtyId = data.specialtyId;
+                    doctorInfor.clinicId = data.clinicId;
                     await doctorInfor.save();
                 } else {
                     //create
@@ -136,6 +154,8 @@ let saveDetailInforDoctor = (data) => {
                         note: data.note,
                         addressClinic: data.addressClinic,
                         nameClinic: data.nameClinic,
+                        specialtyId: data.specialtyId,
+                        clinicId: data.clinicId,
                     });
                 }
                 resolve({

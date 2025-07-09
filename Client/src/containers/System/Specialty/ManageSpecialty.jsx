@@ -14,6 +14,7 @@ class ManageSpecialty extends Component {
         super(props);
         this.state = {
             name: "",
+            nameEn: "",
             imageBase64: "",
             descriptionHTML: "",
             descriptionMarkdown: "",
@@ -51,12 +52,14 @@ class ManageSpecialty extends Component {
     handleSaveNewSpecialty = () => {
         this.props.createNewSpecialty({
             name: this.state.name,
+            nameEn: this.state.nameEn,
             imageBase64: this.state.imageBase64,
             descriptionHTML: this.state.descriptionHTML,
             descriptionMarkdown: this.state.descriptionMarkdown,
         });
         this.setState({
             name: "",
+            nameEn: "",
             imageBase64: "",
             descriptionHTML: "",
             descriptionMarkdown: "",
@@ -67,7 +70,7 @@ class ManageSpecialty extends Component {
             <div className="manage-specialty-container">
                 <div className="ms-title">Quản lý chuyên khoa</div>
                 <div className="add-new-specialty row">
-                    <div className="col-6 form-group">
+                    <div className="col-4 form-group">
                         <label>Tên chuyên khoa</label>
                         <input
                             className="form-control"
@@ -77,7 +80,17 @@ class ManageSpecialty extends Component {
                                 this.handleOnChangeInput(event, "name")
                             }></input>
                     </div>
-                    <div className="col-6 form-group">
+                    <div className="col-4 form-group">
+                        <label>Tên chuyên khoa bằng tiếng anh</label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            value={this.state.nameEn}
+                            onChange={(event) =>
+                                this.handleOnChangeInput(event, "nameEn")
+                            }></input>
+                    </div>
+                    <div className="col-4 form-group">
                         <label>Ảnh chuyên khoa</label>
                         <input
                             className="form-control"

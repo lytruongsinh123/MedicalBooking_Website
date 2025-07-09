@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Slider from "react-slick";
+import { languages } from "../../../utils";
 import { FormattedMessage } from "react-intl";
 import { getAllSpecialtyService } from "../../../services/userService";
+import { withRouter } from "react-router";
+
 class Specialty extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +22,12 @@ class Specialty extends Component {
             });
         }
     };
-    componentDidUpdate = (prevProps, prevState, snapshot) => {};
+    componentDidUpdate = (prevProps, prevState, snapshot) => { };
+    handleViewDetailSpecialty = (specialty) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-specialty/${specialty.id}`);
+        }
+    };
     render() {
         let { dataSpecialty } = this.state;
         return (
@@ -40,7 +48,10 @@ class Specialty extends Component {
                                     return (
                                         <div
                                             className="section-customize"
-                                            key={index}>
+                                            key={index}
+                                            onClick={() =>
+                                                this.handleViewDetailSpecialty(item)
+                                            }>
                                             <div className="specialty-body">
                                                 <div
                                                     className="bg-image section-specialty"
@@ -49,7 +60,12 @@ class Specialty extends Component {
                                                     }}
                                                 />
                                                 <div className="name-spacialty">
-                                                    {item.name}
+                                                    {
+                                                        this.props.language ===
+                                                        languages.VI
+                                                            ? item.name
+                                                            : item.nameEn
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -74,4 +90,6 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Specialty)
+);

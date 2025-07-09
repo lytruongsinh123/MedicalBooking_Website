@@ -107,9 +107,12 @@
             "price" : "Price",
             "payment" : "Payment",
             "province": "Province",
+            "specialty": "Specialty",
             "nameclinic": "Clinic name",
             "addressclinic": "Clinic address",
-            "note": "Note"
+            "note": "Note",
+            "select-specialty": "Select specialty",
+            "select-clinic": "Select clinic"
         }
     }
 }

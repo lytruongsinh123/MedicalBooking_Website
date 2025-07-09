@@ -25,8 +25,7 @@ class OutstandingDoctor extends Component {
     };
 
     handleViewDetailDoctor = (doctor) => {
-        console.log("hoidanit", doctor);
-        if (this.props.history && !this.props.isLoggedIn) {
+        if (this.props.history) {
             this.props.history.push(`/detail-doctor/${doctor.id}`);
         }
     };
@@ -55,7 +54,7 @@ class OutstandingDoctor extends Component {
                                     if (item.image) {
                                         imageBase64 = new Buffer(
                                             item.image,
-                                            "base64",
+                                            "base64"
                                         ).toString("binary");
                                     }
                                     let nameVi = `${item.positionData.valueVi},${item.lastName} ${item.firstName}`;
@@ -66,10 +65,9 @@ class OutstandingDoctor extends Component {
                                             key={index}
                                             onClick={() =>
                                                 this.handleViewDetailDoctor(
-                                                    item,
+                                                    item
                                                 )
-                                            }
-                                        >
+                                            }>
                                             <div className="customize-border">
                                                 <div className="outer-bg">
                                                     <div
@@ -115,5 +113,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor),
+    connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor)
 );
