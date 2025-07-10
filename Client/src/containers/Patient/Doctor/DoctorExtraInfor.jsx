@@ -14,7 +14,16 @@ class DoctorExtraInfor extends Component {
         };
     }
     // thực hiện một lần
-    async componentDidMount() {}
+    async componentDidMount() {
+        if (this.props.doctorId) {
+            let res = await getSExtraInforDoctorById(this.props.doctorId);
+            if (res && res.errCode === 0) {
+                this.setState({
+                    exTraInfor: res.data,
+                });
+            }
+        }
+    }
 
     // thực hiện mỗi khi props hoặc state thay đổi
     componentDidUpdate = async (prevProps, prevState, snapshot) => {

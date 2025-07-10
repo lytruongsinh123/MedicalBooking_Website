@@ -1,0 +1,99 @@
+.detail-specialty-container {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    padding-bottom: 32px;
+
+    .description-specialty {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 24px 0 rgba(33, 145, 80, 0.08);
+        padding: 32px 28px 24px 28px;
+        margin: 32px auto 32px auto; // Thêm margin-top: 32px
+        min-width: 1000px;
+        min-height: 500px;
+        font-size: 1.15rem;
+        color: #222;
+        line-height: 1.7;
+        font-weight: 400;
+        letter-spacing: 0.01em;
+        transition: box-shadow 0.2s;
+        position: relative;
+    }
+
+    .description-specialty:hover {
+        box-shadow: 0 8px 32px 0 rgba(33, 145, 80, 0.16);
+    }
+
+    .detail-specialty-body {
+        margin: 0 150px;
+    }
+
+    .each-doctor {
+        display: flex;
+        width: 100%;
+        min-height: 320px;
+        margin: 28px 0;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 16px 0 rgba(33, 145, 80, 0.09);
+        transition: box-shadow 0.25s, transform 0.25s;
+        overflow: hidden;
+        position: relative;
+
+        &:hover {
+            box-shadow: 0 8px 32px 0 rgba(33, 145, 80, 0.18);
+            transform: translateY(-4px) scale(1.015);
+        }
+
+        .dt-content-left {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, #e0f7fa 0%, #f5fafd 100%);
+            border-right: 1px solid #e6e6e6;
+            padding: 32px 0;
+
+            .profile-doctor {
+                width: 90%;
+                /* Bỏ transition và hiệu ứng hover */
+            }
+            .profile-doctor:hover {
+                transform: none;
+                box-shadow: none;
+                background: none;
+                border-radius: 0;
+            }
+        }
+
+        .dt-content-right {
+            width: 60%;
+            padding: 28px 24px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .doctor-schedule {
+                margin-bottom: 18px;
+                background: #f6fafd;
+                border-radius: 10px;
+                box-shadow: 0 1px 8px 0 rgba(33, 145, 80, 0.06);
+                padding: 16px 18px;
+                transition: box-shadow 0.2s;
+            }
+            .doctor-schedule:hover {
+                box-shadow: 0 4px 16px 0 rgba(33, 145, 80, 0.13);
+            }
+
+            .doctor-extra-infor {
+                border-top: 2px solid #e0eafc;
+                padding-top: 14px;
+                margin-top: 10px;
+                background: #fafdff;
+                border-radius: 0 0 10px 10px;
+                .doctor-extra-infor-container {
+                    padding-left: 0 !important;
+                }
+            }
+        }
+    }
+}
