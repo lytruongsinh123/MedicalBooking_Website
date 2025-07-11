@@ -10,7 +10,7 @@
         background: #fff;
         border-radius: 0 0 25px 25px;
         box-shadow: 0 4px 24px 0 rgba(73, 188, 226, 0.1);
-        padding: 36px 32px 28px 32px;
+        padding: 24px 120px;
         min-width: 100%;
         min-height: 180px;
         max-width: 1100px;
@@ -23,6 +23,7 @@
         position: relative;
         word-break: break-word;
         margin-bottom: 24px;
+        animation: introFadeDown 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         &:hover {
             box-shadow: 0 8px 32px 0 rgba(73, 188, 226, 0.18);
         }
@@ -68,6 +69,7 @@
     .search-specialty-doctor {
         display: flex;
         justify-content: flex-start;
+        cursor: pointer;
         // margin: 24px 0 32px 0;
 
         .custom-select-province {
@@ -83,6 +85,7 @@
             box-shadow: 0 2px 12px 0 rgba(73, 188, 226, 0.07);
             transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
             text-align: left;
+            cursor: pointer;
 
             /* Tạo hiệu ứng khoảng cách giữa các option trên Chrome */
             option {
@@ -103,28 +106,39 @@
         padding: 0 24px;
         margin: 0 150px;
         display: flex;
-        width: 80%;
+        width: 95%;
         min-height: 320px;
         margin: 28px 0;
         background: #fff;
         border-radius: 16px;
         box-shadow: 0 2px 16px 0 rgba(33, 145, 80, 0.09);
-        transition: box-shadow 0.25s, transform 0.25s;
         overflow: hidden;
         position: relative;
-
-        &:hover {
-            box-shadow: 0 8px 32px 0 rgba(33, 145, 80, 0.18);
-            transform: translateY(-4px) scale(1.015);
+        opacity: 0;
+        // Hiệu ứng động xuất hiện và hover
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s,
+            transform 0.6s;
+        // Đan xen: chẵn từ trái, lẻ từ phải
+        &.even.show {
+            animation: slideInLeft 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
-
+        &.odd.show {
+            animation: slideInRight 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        &.show {
+            opacity: 1;
+        }
+        &:hover {
+            box-shadow: 0 8px 32px 0 rgba(73, 188, 226, 0.18);
+            transform: scale(1.015) !important;
+        }
         .dt-content-left {
             width: 40%;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(120deg, #e0f7fa 0%, #f5fafd 100%);
-            border-right: 1px solid #e6e6e6;
+            border-right: 1px solid var(--primary-color-blue);
             padding: 32px 0;
 
             .profile-doctor {
@@ -150,16 +164,17 @@
                 margin-bottom: 18px;
                 background: #f6fafd;
                 border-radius: 10px;
-                box-shadow: 0 1px 8px 0 rgba(33, 145, 80, 0.06);
+                box-shadow: 0 1px 8px 0 rgba(73, 188, 226, 0.09);
                 padding: 16px 18px;
-                transition: box-shadow 0.2s;
+                transition: box-shadow 0.2s, background 0.2s;
             }
             .doctor-schedule:hover {
-                box-shadow: 0 4px 16px 0 rgba(33, 145, 80, 0.13);
+                box-shadow: 0 4px 16px 0 rgba(73, 188, 226, 0.16);
+                background: #eafafd;
             }
 
             .doctor-extra-infor {
-                border-top: 2px solid #e0eafc;
+                border-top: 2px solid var(--primary-color-blue);
                 padding-top: 14px;
                 margin-top: 10px;
                 background: #fafdff;
@@ -169,5 +184,52 @@
                 }
             }
         }
+    }
+    // Responsive cho mobile/tablet
+    @media (max-width: 900px) {
+        .each-doctor {
+            flex-direction: column;
+            margin: 18px 0;
+            min-height: 420px;
+            .dt-content-left,
+            .dt-content-right {
+                width: 100%;
+                border-right: none;
+                padding: 18px 0;
+            }
+            .dt-content-right {
+                padding: 18px 12px 12px 12px;
+            }
+        }
+    }
+}
+@keyframes introFadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(80px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
     }
 }

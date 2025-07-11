@@ -8,8 +8,9 @@ import DoctorExtraInfor from "../Doctor/DoctorExtraInfor";
 import ProfileDoctor from "../Doctor/ProfileDoctor";
 import { getDetailSpecialtyById } from "../../../services/userService";
 import { getAllCodeService } from "../../../services/userService";
-import _ from "lodash";
+import _, { create } from "lodash";
 import { languages } from "../../../utils";
+import EachDoctor from "./DetailSpecialty";
 class DetailSpecialty extends Component {
     constructor(props) {
         super(props);
@@ -28,15 +29,11 @@ class DetailSpecialty extends Component {
             this.props.match.params.id
         ) {
             let id = this.props.match.params.id;
-            this.setState({
-                currentDoctorId: id,
-            });
             let res = await getDetailSpecialtyById({
                 id: id,
                 location: "ALL",
             });
             let resProvince = await getAllCodeService("PROVINCE");
-
             if (
                 res &&
                 res.errCode === 0 &&
@@ -44,7 +41,6 @@ class DetailSpecialty extends Component {
                 resProvince.errCode === 0
             ) {
                 let data = res.data;
-                let dataProvince = resProvince.data;
                 let arrDoctorId = [];
                 if (data && !_.isEmpty(data)) {
                     let arr = data.doctorSpecialty;
@@ -54,10 +50,20 @@ class DetailSpecialty extends Component {
                         });
                     }
                 }
+                let dataProvince = resProvince.data;
+                if (dataProvince && dataProvince.length > 0) {
+                    dataProvince.unshift({
+                        createdAt: null,
+                        keyMap: "ALL",
+                        type: "PROVINCE",
+                        valueEn: "All",
+                        valueVi: "Toàn quốc",
+                    });
+                }
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
-                    listProvince: dataProvince,
+                    listProvince: dataProvince ? dataProvince : [],
                 });
             }
         }
@@ -66,7 +72,36 @@ class DetailSpecialty extends Component {
     // thực hiện mỗi khi props hoặc state thay đổi
     componentDidUpdate = async (prevProps, prevState, snapshot) => {};
     handleOnChangeSelect = async (event) => {
-        console.log("event: ", event.target.value);
+        if (
+            this.props.match &&
+            this.props.match.params &&
+            this.props.match.params.id
+        ) {
+            let id = this.props.match.params.id;
+            let location = event.target.value;
+            let res = await getDetailSpecialtyById({
+                id: id,
+                location: location,
+            });
+            if (res && res.errCode === 0) {
+                let data = res.data;
+
+                let arrDoctorId = [];
+                if (data && !_.isEmpty(data)) {
+                    let arr = data.doctorSpecialty;
+
+                    if (arr && arr.length > 0) {
+                        arr.map((item) => {
+                            arrDoctorId.push(item.doctorId);
+                        });
+                    }
+                }
+                this.setState({
+                    dataDetailSpecialty: res.data,
+                    arrDoctorId: arrDoctorId,
+                });
+            }
+        }
     };
     handleToggleDescription = () => {
         this.setState((prevState) => ({
@@ -74,7 +109,12 @@ class DetailSpecialty extends Component {
         }));
     };
     render() {
-        let { arrDoctorId, dataDetailSpecialty, listProvince, showFullDescription } = this.state;
+        let {
+            arrDoctorId,
+            dataDetailSpecialty,
+            listProvince,
+            showFullDescription,
+        } = this.state;
         let { language } = this.props;
         return (
             <div className="detail-specialty-container">
@@ -117,8 +157,7 @@ class DetailSpecialty extends Component {
                                 listProvince.map((item, index) => {
                                     return (
                                         <option key={index} value={item.keyMap}>
-                                            {this.props.language ===
-                                            languages.VI
+                                            {language === languages.VI
                                                 ? item.valueVi
                                                 : item.valueEn}
                                         </option>
@@ -130,13 +169,14 @@ class DetailSpecialty extends Component {
                         arrDoctorId.length > 0 &&
                         arrDoctorId.map((item, index) => {
                             return (
-                                <div className="each-doctor" key={index}>
+                                <EachDoctor key={index} index={index}>
                                     <div className="dt-content-left">
                                         <div className="profile-doctor">
                                             <ProfileDoctor
                                                 doctorId={item}
                                                 isShowDescriptionDoctor={true}
-                                                // dataTime={dataTime}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={true}
                                             />
                                         </div>
                                     </div>
@@ -148,7 +188,7 @@ class DetailSpecialty extends Component {
                                             <DoctorExtraInfor doctorId={item} />
                                         </div>
                                     </div>
-                                </div>
+                                </EachDoctor>
                             );
                         })}
                 </div>

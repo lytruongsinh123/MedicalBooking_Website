@@ -21,6 +21,16 @@ class DoctorSchedule extends Component {
     async componentDidMount() {
         let { language } = this.props;
         let allDays = this.getArrDays(language);
+        if (this.props.doctorId) {
+            let res = await getScheduleDoctorByDate(
+                this.props.doctorId,
+                allDays[0].value
+            );
+            this.setState({
+                allAvailableTime: res.data ? res.data : [],
+            });
+        }
+
         this.setState({
             allDays: allDays,
         });
@@ -65,7 +75,7 @@ class DoctorSchedule extends Component {
             let allDays = this.getArrDays(this.props.language);
             let res = await getScheduleDoctorByDate(
                 this.props.doctorId,
-                allDays[0].value,
+                allDays[0].value
             );
             this.setState({
                 allAvailableTime: res.data ? res.data : [],
@@ -110,8 +120,7 @@ class DoctorSchedule extends Component {
                         <select
                             onChange={(event) =>
                                 this.handleOnchangeSelect(event)
-                            }
-                        >
+                            }>
                             {allDays &&
                                 allDays.length > 0 &&
                                 allDays.map((item, index) => {
@@ -155,14 +164,13 @@ class DoctorSchedule extends Component {
                                                             }
                                                             onClick={() => {
                                                                 this.handleClickScheduleTime(
-                                                                    item,
+                                                                    item
                                                                 );
-                                                            }}
-                                                        >
+                                                            }}>
                                                             {timeDisplay}
                                                         </button>
                                                     );
-                                                },
+                                                }
                                             )}
                                         </div>
 

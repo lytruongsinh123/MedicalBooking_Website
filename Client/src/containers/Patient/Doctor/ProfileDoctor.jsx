@@ -7,7 +7,8 @@ import { getProfileInforDoctorById } from "../../../services/userService";
 import NumberFormat from "react-number-format";
 import _ from "lodash";
 import moment from "moment";
-
+import { path } from "../../../utils/constant";
+import { Link } from "react-router-dom";
 class ProfileDoctor extends Component {
     constructor(props) {
         super(props);
@@ -36,6 +37,10 @@ class ProfileDoctor extends Component {
     // thực hiện mỗi khi props hoặc state thay đổi
     componentDidUpdate = async (prevProps, prevState, snapshot) => {
         if (prevProps.doctorId !== this.props.doctorId) {
+            let data = await this.getInforDoctor(this.props.doctorId);
+            this.setState({
+                dataProfile: data,
+            });
         }
     };
     renderTimeBooking = (dataTime) => {
@@ -70,7 +75,14 @@ class ProfileDoctor extends Component {
     };
     render() {
         let { dataProfile } = this.state;
-        let { language, isShowDescriptionDoctor, dataTime } = this.props;
+        let {
+            language,
+            isShowDescriptionDoctor,
+            dataTime,
+            isShowPrice,
+            isShowLinkDetail,
+            doctorId,
+        } = this.props;
         let nameVi = "",
             nameEn = "";
         if (dataProfile && dataProfile.positionData) {
@@ -80,15 +92,29 @@ class ProfileDoctor extends Component {
         return (
             <div className="profile-doctor-container">
                 <div className="intro-doctor">
-                    <div
-                        className="content-left"
-                        style={{
-                            backgroundImage: `url(${
-                                dataProfile && dataProfile.image
-                                    ? dataProfile.image
-                                    : ""
-                            })`,
-                        }}></div>
+                    <div className="total-content">
+                        <div
+                            className="content-left"
+                            style={{
+                                backgroundImage: `url(${
+                                    dataProfile && dataProfile.image
+                                        ? dataProfile.image
+                                        : ""
+                                })`,
+                            }}></div>
+                        {isShowLinkDetail === true && (
+                            <div className="view-detail-profile">
+                                <Link
+                                    to={`${path.DETAIL_DOCTOR.replace(
+                                        ":id",
+                                        doctorId
+                                    )}`}
+                                    className="detail-link">Xem thêm
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+
                     <div className="content-right">
                         <div className="up">
                             {language === languages.VI ? nameVi : nameEn}
@@ -112,37 +138,40 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="price">
-                    <FormattedMessage id="patient.extra-infor-doctor.price" />
-                    {dataProfile &&
-                        dataProfile.Doctor_Infor &&
-                        language === languages.VI && (
-                            <NumberFormat
-                                value={
-                                    dataProfile.Doctor_Infor.priceTypeData
-                                        .valueVi
-                                }
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                suffix={"VND"}
-                                className="currency"
-                            />
-                        )}
-                    {dataProfile &&
-                        dataProfile.Doctor_Infor &&
-                        language === languages.EN && (
-                            <NumberFormat
-                                value={
-                                    dataProfile.Doctor_Infor.priceTypeData
-                                        .valueEn
-                                }
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                suffix={"$"}
-                                className="currency"
-                            />
-                        )}
-                </div>
+
+                {isShowPrice && (
+                    <div className="price">
+                        <FormattedMessage id="patient.extra-infor-doctor.price" />
+                        {dataProfile &&
+                            dataProfile.Doctor_Infor &&
+                            language === languages.VI && (
+                                <NumberFormat
+                                    value={
+                                        dataProfile.Doctor_Infor.priceTypeData
+                                            .valueVi
+                                    }
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    suffix={"VND"}
+                                    className="currency"
+                                />
+                            )}
+                        {dataProfile &&
+                            dataProfile.Doctor_Infor &&
+                            language === languages.EN && (
+                                <NumberFormat
+                                    value={
+                                        dataProfile.Doctor_Infor.priceTypeData
+                                            .valueEn
+                                    }
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    suffix={"$"}
+                                    className="currency"
+                                />
+                            )}
+                    </div>
+                )}
             </div>
         );
     }
