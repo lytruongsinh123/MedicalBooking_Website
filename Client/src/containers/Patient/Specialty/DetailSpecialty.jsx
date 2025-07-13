@@ -10,7 +10,7 @@ import { getDetailSpecialtyById } from "../../../services/userService";
 import { getAllCodeService } from "../../../services/userService";
 import _, { create } from "lodash";
 import { languages } from "../../../utils";
-import EachDoctor from "./DetailSpecialty";
+import EachDoctor from "./each_doctor";
 class DetailSpecialty extends Component {
     constructor(props) {
         super(props);
