@@ -41,15 +41,78 @@ class ManageClinic extends Component {
 
     // thực hiện mỗi khi props hoặc state thay đổi
     componentDidUpdate = async (prevProps, prevState, snapshot) => {};
+    compressImage = (file, maxSizeKB = 10) => {
+        return new Promise((resolve) => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const img = new Image();
+            img.onload = () => {
+                // Tính toán kích thước mới để giảm dung lượng
+                let { width, height } = img;
+                const maxWidth = 500;
+                const maxHeight = 500;
+                if (width > height) {
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+                } else {
+                    if (height > maxHeight) {
+                        width = (width * maxHeight) / height;
+                        height = maxHeight;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                // Vẽ ảnh với kích thước mới
+                ctx.drawImage(img, 0, 0, width, height);
+                // Thử các mức quality khác nhau để đạt kích thước mong muốn
+                let quality = 0.9;
+                let compressedDataUrl;
+                do {
+                    compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+                    const sizeKB = (compressedDataUrl.length * 0.75) / 1024; // Ước tính kích thước
+
+                    if (sizeKB <= maxSizeKB) {
+                        break;
+                    }
+
+                    quality -= 0.05;
+                } while (quality > 0.05);
+                resolve(compressedDataUrl);
+            };
+            img.src = URL.createObjectURL(file);
+        });
+    };
+
     handleOnchangeImg = async (event) => {
         let data = event.target.files; // lấy ra file ảnh
         let file = data[0]; // lấy ra file đầu tiên
-        let objectUrl = URL.createObjectURL(file); // tạo ra đường dẫn tạm thời
         if (file) {
-            let base64 = await CommonUtils.toBase64(file); // chuyển đổi file sang base64
-            this.setState({
-                imageBase64: base64, // cập nhật state với base64 của ảnh
-            });
+            try {
+                // Compress ảnh trước khi chuyển sang base64
+                let compressedBase64 = await this.compressImage(file);
+                // Kiểm tra kích thước sau khi compress
+                const sizeKB = (compressedBase64.length * 0.75) / 1024;
+                console.log(`Compressed image size: ${sizeKB.toFixed(2)} KB`);
+                this.setState({
+                    imageBase64: compressedBase64,
+                });
+                if (sizeKB > 10) {
+                    toast.warning(
+                        `Image size is ${sizeKB.toFixed(
+                            2
+                        )} KB. Please use a smaller image.`
+                    );
+                } else {
+                    toast.success(
+                        `Image compressed successfully: ${sizeKB.toFixed(2)} KB`
+                    );
+                }
+            } catch (error) {
+                console.error("Error compressing image:", error);
+                toast.error("Error processing image");
+            }
         }
     };
     handleEditorChange = ({ html, text }) => {
@@ -76,7 +139,7 @@ class ManageClinic extends Component {
             address: this.state.address,
         });
         console.log("check res: ", res);
-        if(res && res.errCode === 0) {
+        if (res && res.errCode === 0) {
             toast.success("Create new clinic succeed!");
             this.setState({
                 name: "",
@@ -89,7 +152,7 @@ class ManageClinic extends Component {
                 lng: res.clinic.lng,
             });
         } else {
-            toast.error("Create new clinic failed!")
+            toast.error("Create new clinic failed!");
         }
     };
     render() {

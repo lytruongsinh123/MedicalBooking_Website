@@ -4,19 +4,22 @@ import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
-import { userIsAuthenticated, userIsNotAuthenticated } from "../hoc/authentication";
+import {
+    userIsAuthenticated,
+    userIsNotAuthenticated,
+} from "../hoc/authentication";
 import { path } from "../utils";
 import Home from "../routes/Home";
 import Login from "./Auth/Login";
 import System from "../routes/System";
 import Doctor from "../routes/Doctor";
-import { CustomToastCloseButton } from "../components/CustomToast";
 import ConfirmModal from "../components/ConfirmModal";
 import HomePage from "./HomePage/Homepage";
 import CustomScrollbars from "../components/CustomScrollbars";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor";
 import VerifyEmail from "./Patient/VerifyEmail";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty";
+import DetailClinic from "./Patient/Clinic/DetailClinic";
 class App extends Component {
     handlePersistorState = () => {
         const { persistor } = this.props;
@@ -78,8 +81,12 @@ class App extends Component {
                                         path={path.VERIFY_EMAIL_BOOKING}
                                         component={VerifyEmail}
                                     />
-                                     <Route
+                                    <Route
                                         path={path.DETAIL_SPECIALTY}
+                                        component={DetailSpecialty}
+                                    />
+                                    <Route
+                                        path={path.DETAIL_CLINIC}
                                         component={DetailSpecialty}
                                     />
                                 </Switch>

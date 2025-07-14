@@ -8,7 +8,7 @@ let geocodeAddress = async (address) => {
             address
         )}&format=json`;
 
-        const res = await fetch(url, { timeout: 10000 });
+        const res = await fetch(url);
         if (!res.ok) {
             throw new Error("Network response was not ok");
         }
@@ -29,9 +29,9 @@ let createClinic = (data) => {
             if (
                 !data.name ||
                 !data.nameEn ||
-                // !data.imageBase64 ||
-                // !data.descriptionHTML ||
-                // !data.descriptionMarkdown ||
+                !data.imageBase64 ||
+                !data.descriptionHTML ||
+                !data.descriptionMarkdown ||
                 !data.address
             ) {
                 resolve({
@@ -72,6 +72,75 @@ let createClinic = (data) => {
         }
     });
 };
+let getAllClinic = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Clinic.findAll({
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"],
+                },
+                // limit: 10,
+                // offset: offset // can be used for pagination
+            });
+            if (data && data.length > 0) {
+                data = data.map((item) => {
+                    item.image = Buffer.from(item.image, "base64").toString(
+                        "binary"
+                    );
+                    return item;
+                });
+            }
+            resolve({
+                errCode: 0,
+                errMessage: "Get all specialties successfully",
+                data,
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+let getDetailClinicById = (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required parameters",
+                });
+            } else {
+                let data = await db.Clinic.findOne({
+                    where: { id: inputId },
+                    attributes: [
+                        "name",
+                        "nameEn",
+                        "image",
+                        "address",
+                        "lat",
+                        "lng",
+                    ],
+                });
+                if (data) {
+                    let doctorClinic = [];
+                    doctorClinic = await db.Doctor_Infor.findAll({
+                        where: { clinicId: inputId },
+                        attributes: ["doctorId", "provinceId"],
+                    });
+                    data.doctorClinic = doctorClinic;
+                } else data = {};
+                resolve({
+                    errCode: 0,
+                    errMessage: "OK",
+                    data: data,
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
 module.exports = {
     createClinic: createClinic,
+    getAllClinic: getAllClinic,
+    getDetailClinicById: getDetailClinicById,
 };
