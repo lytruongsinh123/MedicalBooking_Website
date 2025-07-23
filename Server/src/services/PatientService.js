@@ -15,7 +15,10 @@ let postBookAppointment = (data) => {
                 !data.doctorId ||
                 !data.date ||
                 !data.timeType ||
-                !data.fullName
+                !data.fullName ||
+                !data.selectedGender ||
+                !data.address ||
+                !data.phoneNumber
             ) {
                 resolve({
                     errCode: 1,
@@ -52,6 +55,12 @@ let postBookAppointment = (data) => {
                     defaults: {
                         email: data.email,
                         roleId: "R3", // Assuming R3 is the role for patients
+                        address: data.address,
+                        gender: data.selectedGender,
+                        firstName: data.fullName.split(" ")[0], // Lấy từ đầu tiên làm firstName
+                        lastName: data.fullName.split(" ").slice(1).join(" "), // Phần còn lại làm lastName
+                        phoneNumber: data.phoneNumber,
+                        positionId: "P0", // Assuming P0 is the position for patients
                     },
                 });
                 // create a booking record
@@ -80,17 +89,16 @@ let postBookAppointment = (data) => {
         }
     });
 };
-let postVerifyBookAppointment = (data) => { 
+let postVerifyBookAppointment = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if(!data.token || !data.doctorId) {
+            if (!data.token || !data.doctorId) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing parameter",
                 });
                 return;
-            }
-            else {
+            } else {
                 let appointment = await db.Booking.findOne({
                     where: {
                         token: data.token,
@@ -107,20 +115,19 @@ let postVerifyBookAppointment = (data) => {
                         errCode: 0,
                         errMessage: "Verify booking appointment successful",
                     });
-                }
-                else {
+                } else {
                     resolve({
                         errCode: 2,
-                        errMessage: "Appointment not found or already confirmed",
+                        errMessage:
+                            "Appointment not found or already confirmed",
                     });
                 }
             }
-            
         } catch (e) {
             reject(e); // ngay khi chạy reject thì ở Controller sẽ bắt error qua hàm catch
         }
     });
-}
+};
 module.exports = {
     postBookAppointment: postBookAppointment,
     postVerifyBookAppointment: postVerifyBookAppointment,

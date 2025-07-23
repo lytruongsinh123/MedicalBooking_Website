@@ -61,6 +61,79 @@
                 color: var(--primary-color-blue);
             }
         }
+
+        .desc-content {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+
+            &.hide {
+                max-height: 200px;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    height: 60px;
+                    background: linear-gradient(
+                        to bottom,
+                        rgba(255, 255, 255, 0) 0%,
+                        rgba(255, 255, 255, 0.8) 70%,
+                        rgba(255, 255, 255, 1) 100%
+                    );
+                    pointer-events: none;
+                    transition: opacity 0.3s ease;
+                }
+            }
+
+            &.show {
+                max-height: 2000px;
+                transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+                &::after {
+                    opacity: 0;
+                }
+            }
+        }
+
+        .desc-toggle {
+            text-align: center;
+            margin-top: 16px;
+
+            button {
+                background: linear-gradient(
+                    135deg,
+                    var(--primary-color-blue) 0%,
+                    #3aa8d1 100%
+                );
+                color: white;
+                border: none;
+                padding: 10px 24px;
+                border-radius: 20px;
+                font-size: 0.95rem;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 8px rgba(73, 188, 226, 0.3);
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 16px rgba(73, 188, 226, 0.4);
+                    background: linear-gradient(
+                        135deg,
+                        #3aa8d1 0%,
+                        var(--primary-color-blue) 100%
+                    );
+                }
+
+                &:active {
+                    transform: translateY(0);
+                    box-shadow: 0 2px 8px rgba(73, 188, 226, 0.3);
+                }
+            }
+        }
     }
 
     .description-specialty:hover {
@@ -185,6 +258,118 @@
             }
         }
     }
+
+    .clinic-map-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 32px 0;
+        padding: 0 24px;
+
+        .map-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px 0 rgba(73, 188, 226, 0.12);
+            overflow: hidden;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+            animation: slideUpFade 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+            &:hover {
+                box-shadow: 0 8px 32px 0 rgba(73, 188, 226, 0.18);
+            }
+
+            .map-header {
+                background: linear-gradient(
+                    135deg,
+                    var(--primary-color-blue) 0%,
+                    #3aa8d1 100%
+                );
+                color: white;
+                padding: 16px 24px;
+                font-size: 1.2rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                .map-icon {
+                    font-size: 1.4rem;
+                }
+
+                .clinic-address {
+                    font-size: 0.95rem;
+                    font-weight: 400;
+                    opacity: 0.9;
+                    margin-top: 4px;
+                }
+            }
+
+            .leaflet-container {
+                height: 400px;
+                width: 100%;
+                border: none;
+                outline: none;
+                z-index: 1;
+            }
+
+            // Custom marker popup
+            .leaflet-popup-content-wrapper {
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+                border: 1px solid var(--primary-color-blue);
+            }
+
+            .leaflet-popup-content {
+                font-family: inherit;
+                font-size: 0.95rem;
+                line-height: 1.4;
+                color: #333;
+                margin: 12px 16px;
+            }
+
+            .leaflet-popup-tip {
+                background: white;
+                border: 1px solid var(--primary-color-blue);
+                border-top: none;
+                border-right: none;
+            }
+        }
+
+        .no-location-message {
+            width: 90%;
+            max-width: 1200px;
+            height: 400px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #dee2e6;
+            color: #6c757d;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+
+            .no-location-icon {
+                font-size: 3rem;
+                margin-bottom: 16px;
+                opacity: 0.6;
+            }
+
+            p {
+                margin: 0;
+                line-height: 1.5;
+            }
+        }
+    }
+
     // Responsive cho mobile/tablet
     @media (max-width: 900px) {
         .each-doctor {
@@ -199,6 +384,54 @@
             }
             .dt-content-right {
                 padding: 18px 12px 12px 12px;
+            }
+        }
+
+        .clinic-map-container {
+            margin: 24px 0;
+            padding: 0 12px;
+
+            .map-wrapper {
+                width: 100%;
+                border-radius: 12px;
+
+                .map-header {
+                    padding: 12px 16px;
+                    font-size: 1.1rem;
+
+                    .clinic-address {
+                        font-size: 0.9rem;
+                    }
+                }
+
+                .leaflet-container {
+                    height: 300px;
+                }
+            }
+
+            .no-location-message {
+                width: 100%;
+                height: 300px;
+                font-size: 1rem;
+                border-radius: 12px;
+
+                .no-location-icon {
+                    font-size: 2.5rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        .clinic-map-container {
+            .map-wrapper {
+                .leaflet-container {
+                    height: 250px;
+                }
+            }
+
+            .no-location-message {
+                height: 250px;
             }
         }
     }
@@ -231,5 +464,25 @@
     to {
         opacity: 1;
         transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

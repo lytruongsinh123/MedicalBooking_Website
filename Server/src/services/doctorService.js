@@ -63,7 +63,7 @@ let getAllDoctors = () => {
         }
     });
 };
-let checkRequiredFields = (data) => { 
+let checkRequiredFields = (data) => {
     let arrFields = [
         "doctorId",
         "contentHTML",
@@ -90,14 +90,16 @@ let checkRequiredFields = (data) => {
         isValid: isValid,
         element: element,
     };
-}
+};
 let saveDetailInforDoctor = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
             if (checkRequiredFields(data).isValid === false) {
                 resolve({
                     errCode: 1,
-                    errMessage: `Missing parameter ${checkRequiredFields(data).element}`,
+                    errMessage: `Missing parameter ${
+                        checkRequiredFields(data).element
+                    }`,
                 });
             } else {
                 // upsert to Markdown table
@@ -457,6 +459,84 @@ let getProfileDoctorById = (doctorId) => {
         }
     });
 };
+
+let getListPatientForDoctor = (doctorId, date) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!doctorId || !date) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing parameter",
+                });
+            } else {
+                let data = await db.Booking.findAll({
+                    where: {
+                        statusId: "S2",
+                        doctorId: doctorId,
+                        date: date,
+                    },
+                    include: [
+                        {
+                            model: db.User,
+                            as: "patientData",
+                            attributes: [
+                                "firstName",
+                                "lastName",
+                                "email",
+                                "address",
+                                "gender",
+                                "phoneNumber",
+                            ],
+                            include: [
+                                {
+                                    model: db.Allcode,
+                                    as: "genderData",
+                                    attributes: ["valueVi", "valueEn"],
+                                },
+                            ],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: "timeTypeDataPatient",
+                            attributes: ["valueVi", "valueEn"],
+                        },
+                    ],
+                    raw: false, // trả về dữ liệu thô
+                    nest: true, // trả về dữ liệu dạng json
+                });
+                resolve({
+                    errCode: 0,
+                    errMessage: "Get list patient for doctor succeed",
+                    data: data, // trả về thông tin bác sĩ
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let sendRemedy = async (data) => { 
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.email || !data.doctorId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: "Missing required parameter",
+                });
+            } else {
+                // get patient email
+
+                resolve({
+                    errCode: 0,
+                    errMessage: "Send remedy successfully",
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
@@ -466,4 +546,6 @@ module.exports = {
     getScheduleByDate: getScheduleByDate,
     getExtraInforDoctorById: getExtraInforDoctorById,
     getProfileDoctorById: getProfileDoctorById,
+    getListPatientForDoctor: getListPatientForDoctor,
+    sendRemedy: sendRemedy,
 };

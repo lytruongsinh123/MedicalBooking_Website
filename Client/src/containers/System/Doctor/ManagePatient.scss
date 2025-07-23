@@ -1,0 +1,115 @@
+.manage-patient-container {
+    .m-p-title {
+        text-transform: uppercase;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+    }
+    .manage-patient-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        .table-manage-patient {
+            width: 100%;
+            overflow-x: auto;
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                th,
+                td {
+                    padding: 12px;
+                    text-align: center;
+                    border: 1px solid #ddd;
+                }
+                th {
+                    background-color: var(--primary-color-blue);
+                    color: white;
+                }
+                tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+
+                .action-buttons {
+                    display: flex;
+                    gap: 8px;
+                    justify-content: center;
+                    align-items: center;
+
+                    .btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        padding: 6px 12px;
+                        border: 1px solid transparent;
+                        border-radius: 4px;
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        text-decoration: none;
+                        min-width: 80px;
+                        justify-content: center;
+
+                        i {
+                            font-size: 0.75rem;
+                        }
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+
+                        &:active {
+                            transform: scale(0.98);
+                        }
+                    }
+
+                    .btn-confirm {
+                        background-color: #28a745;
+                        color: white;
+                        border-color: #28a745;
+
+                        &:hover {
+                            background-color: #218838;
+                            border-color: #1e7e34;
+                        }
+                    }
+
+                    .btn-invoice {
+                        background-color: #007bff;
+                        color: white;
+                        border-color: #007bff;
+
+                        &:hover {
+                            background-color: #0056b3;
+                            border-color: #004085;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Responsive
+        @media (max-width: 768px) {
+            .table-manage-patient {
+                table {
+                    font-size: 0.8rem;
+
+                    .action-buttons {
+                        flex-direction: column;
+                        gap: 4px;
+
+                        .btn {
+                            min-width: 70px;
+                            padding: 5px 10px;
+                            font-size: 0.75rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

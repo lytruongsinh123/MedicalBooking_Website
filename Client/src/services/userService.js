@@ -42,7 +42,7 @@ const saveBulkScheduleDoctor = (data) => {
 };
 const getScheduleDoctorByDate = (doctorId, date) => {
     return axios.get(
-        `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`,
+        `/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
     );
 };
 const getSExtraInforDoctorById = (doctorId) => {
@@ -66,18 +66,25 @@ const createNewSpecialtyService = (data) => {
 const getAllSpecialtyService = () => {
     return axios.get(`/api/get-all-specialty`);
 };
-const getDetailSpecialtyById = (data) => { 
-    return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`);
-}
+const getDetailSpecialtyById = (data) => {
+    return axios.get(
+        `/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`
+    );
+};
 const createNewClinicService = (data) => {
     return axios.post(`/api/create-new-clinic`, data);
 };
 const getAllClinicService = () => {
     return axios.get(`/api/get-all-clinic`);
 };
-let getDetailClinicById = (data) => { 
+let getDetailClinicById = (data) => {
     return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`);
-}
+};
+let getAllPatientForDoctor = (data) => {
+    return axios.get(
+        `/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`
+    );
+};
 export {
     handleLoginApi,
     getAllUsers,
@@ -101,4 +108,5 @@ export {
     createNewClinicService,
     getAllClinicService,
     getDetailClinicById,
+    getAllPatientForDoctor,
 };

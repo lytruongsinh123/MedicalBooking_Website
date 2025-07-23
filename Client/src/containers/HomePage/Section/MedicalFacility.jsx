@@ -35,9 +35,11 @@ class MedicalFacility extends Component {
                 <div className="section-container">
                     <div className="section-header">
                         <span className="title-section">
-                            Cơ sở y tế nổi bật
+                            <FormattedMessage id="homepage.health-facility" />
                         </span>
-                        <button className="btn-section">Xem thêm</button>
+                        <button className="btn-section">
+                            <FormattedMessage id="homepage.more-info" />
+                        </button>
                     </div>
 
                     <div className="section-body">
@@ -50,7 +52,9 @@ class MedicalFacility extends Component {
                                             className="section-customize"
                                             key={index}
                                             onClick={() =>
-                                                this.handleViewDetailClinic(item)
+                                                this.handleViewDetailClinic(
+                                                    item
+                                                )
                                             }>
                                             <div
                                                 className="bg-image section-medical-facility"
@@ -86,4 +90,6 @@ const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MedicalFacility));
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(MedicalFacility)
+);

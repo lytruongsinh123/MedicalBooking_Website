@@ -110,28 +110,36 @@ let getDetailClinicById = (inputId) => {
                 });
             } else {
                 let data = await db.Clinic.findOne({
-                    where: { id: inputId },
+                    where: {
+                        id: inputId,
+                    },
                     attributes: [
                         "name",
                         "nameEn",
-                        "image",
                         "address",
+                        "descriptionHTML",
+                        "descriptionMarkdown",
                         "lat",
                         "lng",
                     ],
                 });
+
                 if (data) {
                     let doctorClinic = [];
                     doctorClinic = await db.Doctor_Infor.findAll({
-                        where: { clinicId: inputId },
-                        attributes: ["doctorId", "provinceId"],
+                        where: {
+                            clinicId: inputId,
+                        },
+                        attributes: ["doctorId"],
                     });
                     data.doctorClinic = doctorClinic;
-                } else data = {};
+                } else {
+                    data = {};
+                }
                 resolve({
                     errCode: 0,
-                    errMessage: "OK",
-                    data: data,
+                    errMessage: "Get all specialties successfully",
+                    data,
                 });
             }
         } catch (e) {
