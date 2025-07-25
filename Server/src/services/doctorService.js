@@ -1,6 +1,7 @@
 import { raw } from "body-parser";
 import db from "../models/index";
 import _ from "lodash";
+import emailService from "../services/emailService";
 require("dotenv").config();
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 let getTopDoctorHome = (limits) => {
@@ -516,17 +517,42 @@ let getListPatientForDoctor = (doctorId, date) => {
     });
 };
 
-let sendRemedy = async (data) => { 
+let sendRemedy = async (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId) {
+            if (
+                !data.email ||
+                !data.doctorId ||
+                !data.patientId ||
+                !data.timeType ||
+                !data.date ||
+                !data.language ||
+                !data.patientName ||
+                !data.doctorName ||
+                !data.timeString
+            ) {
                 resolve({
                     errCode: 1,
                     errMessage: "Missing required parameter",
                 });
             } else {
-                // get patient email
-
+                // update patient status
+                let appointment = await db.Booking.findOne({
+                    where: {
+                        patientId: data.patientId,
+                        doctorId: data.doctorId,
+                        timeType: data.timeType,
+                        date: data.date,
+                        statusId: "S2", // trạng thái đã xác nhận
+                    },
+                    raw: false, // trả về đối tượng của sequelize
+                });
+                if (appointment) {
+                    appointment.statusId = "S3";
+                    await appointment.save();
+                }
+                // send email remedy
+                await emailService.sendAttachmentEmail(data);
                 resolve({
                     errCode: 0,
                     errMessage: "Send remedy successfully",
@@ -536,7 +562,7 @@ let sendRemedy = async (data) => {
             reject(e);
         }
     });
-}
+};
 module.exports = {
     getTopDoctorHome: getTopDoctorHome,
     getAllDoctors: getAllDoctors,
