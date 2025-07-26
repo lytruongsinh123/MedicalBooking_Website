@@ -12,6 +12,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import { postPatientBookingAppointment } from "../../../../services/userService";
 import moment from "moment";
+import LoadingOverlay from "react-loading-overlay";
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +27,7 @@ class BookingModal extends Component {
             doctorId: "",
             selectedGender: "",
             timeType: "",
+            isShowLoading: false,
         };
     }
     // thực hiện một lần
@@ -154,7 +156,7 @@ class BookingModal extends Component {
             }
         }
         if (!isValid) return;
-
+        this.setState({ isShowLoading: true });
         // Call API to post booking appointment
         let date = new Date(this.state.date).getTime();
         let timeString = this.buildTimeBooking(this.props.dataTime);
@@ -174,8 +176,11 @@ class BookingModal extends Component {
             timeString: timeString,
             doctorName: doctorName,
         });
+        this.setState({ isShowLoading: false });
         if (res && res.errCode === 0) {
-            toast.success("Please check your email to confirm the appointment!");
+            toast.success(
+                "Please check your email to confirm the appointment!"
+            );
             this.props.CloseBookingModal();
         } else {
             toast.error("Booking a new appointment error!");
@@ -186,303 +191,316 @@ class BookingModal extends Component {
         let doctorId =
             dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : "";
         return (
-            <Modal
-                isOpen={isOpenModal}
-                toggle={this.props.toggleFromParent}
-                className={"booking-modal-container"}
-                size="lg"
+            <LoadingOverlay
+                active={this.state.isShowLoading}
+                spinner
+                text="Loading..."
                 centered>
-                <div className="booking-modal-content">
-                    <div className="booking-modal-header">
-                        <span className="left">
-                            <FormattedMessage id="patient.booking-modal.title" />
-                        </span>
-                        <span className="right" onClick={CloseBookingModal}>
-                            <i className="fas fa-times"></i>
-                        </span>
-                    </div>
-                    <div className="booking-modal-body">
-                        {/* {JSON.stringify(dataTime)} */}
-                        <div className="doctor-infor">
-                            <ProfileDoctor
-                                doctorId={doctorId}
-                                isShowDescriptionDoctor={false}
-                                dataTime={dataTime}
-                                isShowLinkDetail={false}
-                                isShowPrice={true}
-                            />
+                <Modal
+                    isOpen={isOpenModal}
+                    toggle={this.props.toggleFromParent}
+                    className={"booking-modal-container"}
+                    size="lg"
+                    centered>
+                    <div className="booking-modal-content">
+                        <div className="booking-modal-header">
+                            <span className="left">
+                                <FormattedMessage id="patient.booking-modal.title" />
+                            </span>
+                            <span className="right" onClick={CloseBookingModal}>
+                                <i className="fas fa-times"></i>
+                            </span>
                         </div>
-                        <div className="row">
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.full-name" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-user text-primary"></i>
-                                    </span>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Nhập họ tên"
-                                        value={this.state.fullName}
-                                        onChange={(event) =>
-                                            this.handleOnChangeInput(
-                                                event,
-                                                "fullName"
-                                            )
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.phone-number" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-phone text-primary"></i>
-                                    </span>
-                                    <input
-                                        className="form-control"
-                                        type="phone"
-                                        placeholder="Nhập số điện thoại"
-                                        value={this.state.phoneNumber}
-                                        onChange={(event) =>
-                                            this.handleOnChangeInput(
-                                                event,
-                                                "phoneNumber"
-                                            )
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.email" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-envelope text-primary"></i>
-                                    </span>
-                                    <input
-                                        className="form-control"
-                                        type="email"
-                                        placeholder="Nhập địa chỉ email"
-                                        value={this.state.email}
-                                        onChange={(event) =>
-                                            this.handleOnChangeInput(
-                                                event,
-                                                "email"
-                                            )
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.address" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-map-marker-alt text-primary"></i>
-                                    </span>
-                                    <input
-                                        className="form-control"
-                                        type="address"
-                                        placeholder="Nhập địa chỉ liên hệ"
-                                        value={this.state.address}
-                                        onChange={(event) =>
-                                            this.handleOnChangeInput(
-                                                event,
-                                                "address"
-                                            )
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-12 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.reason-booking" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-stethoscope text-primary"></i>
-                                    </span>
-                                    <input
-                                        className="form-control"
-                                        type="reason"
-                                        placeholder="Nhập lý do khám"
-                                        value={this.state.reason}
-                                        onChange={(event) =>
-                                            this.handleOnChangeInput(
-                                                event,
-                                                "reason"
-                                            )
-                                        }
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.choose-date" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-user-friends text-primary"></i>
-                                    </span>
-                                    <DatePicker
-                                        onChange={this.handleOnChangeDatePicker}
-                                        className="form-control"
-                                        value={this.state.date}
-                                        placeholder="Chọn ngày sinh"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-6 form-group mt-3">
-                                <label className="text-dark fw-bold">
-                                    <FormattedMessage id="patient.booking-modal.gender" />
-                                </label>
-                                <div className="input-group">
-                                    <span className="input-group-text">
-                                        <i className="fas fa-venus-mars text-primary"></i>
-                                    </span>
-                                    <Select
-                                        value={this.state.selectedGender}
-                                        onChange={this.handleChangeSelect}
-                                        options={this.state.genders}
-                                        styles={{
-                                            container: (provided) => ({
-                                                ...provided,
-                                                width: "90%",
-                                            }),
-                                            control: (provided) => ({
-                                                ...provided,
-                                                borderRadius: "0 4px 4px 0",
-                                                borderColor: "#49bce2",
-                                                boxShadow: "none",
-                                                fontSize: "16px",
-                                            }),
-                                        }}
-                                        placeholder="Chọn giới tính"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Hình thức thanh toán */}
-                        <div className="payment-section">
-                            <h5>Hình thức thanh toán</h5>
-                            <div className="payment-option">
-                                <input
-                                    type="radio"
-                                    id="payment-after"
-                                    name="payment"
-                                    value="after"
-                                    defaultChecked
+                        <div className="booking-modal-body">
+                            {/* {JSON.stringify(dataTime)} */}
+                            <div className="doctor-infor">
+                                <ProfileDoctor
+                                    doctorId={doctorId}
+                                    isShowDescriptionDoctor={false}
+                                    dataTime={dataTime}
+                                    isShowLinkDetail={false}
+                                    isShowPrice={true}
                                 />
-                                <label htmlFor="payment-after">
-                                    Thanh toán sau tại cơ sở y tế
-                                </label>
+                            </div>
+                            <div className="row">
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.full-name" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-user text-primary"></i>
+                                        </span>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            placeholder="Nhập họ tên"
+                                            value={this.state.fullName}
+                                            onChange={(event) =>
+                                                this.handleOnChangeInput(
+                                                    event,
+                                                    "fullName"
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.phone-number" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-phone text-primary"></i>
+                                        </span>
+                                        <input
+                                            className="form-control"
+                                            type="phone"
+                                            placeholder="Nhập số điện thoại"
+                                            value={this.state.phoneNumber}
+                                            onChange={(event) =>
+                                                this.handleOnChangeInput(
+                                                    event,
+                                                    "phoneNumber"
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.email" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-envelope text-primary"></i>
+                                        </span>
+                                        <input
+                                            className="form-control"
+                                            type="email"
+                                            placeholder="Nhập địa chỉ email"
+                                            value={this.state.email}
+                                            onChange={(event) =>
+                                                this.handleOnChangeInput(
+                                                    event,
+                                                    "email"
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.address" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-map-marker-alt text-primary"></i>
+                                        </span>
+                                        <input
+                                            className="form-control"
+                                            type="address"
+                                            placeholder="Nhập địa chỉ liên hệ"
+                                            value={this.state.address}
+                                            onChange={(event) =>
+                                                this.handleOnChangeInput(
+                                                    event,
+                                                    "address"
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-12 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.reason-booking" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-stethoscope text-primary"></i>
+                                        </span>
+                                        <input
+                                            className="form-control"
+                                            type="reason"
+                                            placeholder="Nhập lý do khám"
+                                            value={this.state.reason}
+                                            onChange={(event) =>
+                                                this.handleOnChangeInput(
+                                                    event,
+                                                    "reason"
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.choose-date" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-user-friends text-primary"></i>
+                                        </span>
+                                        <DatePicker
+                                            onChange={
+                                                this.handleOnChangeDatePicker
+                                            }
+                                            className="form-control"
+                                            value={this.state.date}
+                                            placeholder="Chọn ngày sinh"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-6 form-group mt-3">
+                                    <label className="text-dark fw-bold">
+                                        <FormattedMessage id="patient.booking-modal.gender" />
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <i className="fas fa-venus-mars text-primary"></i>
+                                        </span>
+                                        <Select
+                                            value={this.state.selectedGender}
+                                            onChange={this.handleChangeSelect}
+                                            options={this.state.genders}
+                                            styles={{
+                                                container: (provided) => ({
+                                                    ...provided,
+                                                    width: "90%",
+                                                }),
+                                                control: (provided) => ({
+                                                    ...provided,
+                                                    borderRadius: "0 4px 4px 0",
+                                                    borderColor: "#49bce2",
+                                                    boxShadow: "none",
+                                                    fontSize: "16px",
+                                                }),
+                                            }}
+                                            placeholder="Chọn giới tính"
+                                        />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="payment-option">
-                                <input
-                                    type="radio"
-                                    id="payment-after"
-                                    name="payment"
-                                    value="after"
-                                    defaultChecked
-                                />
-                                <label htmlFor="payment-after">
-                                    Thanh toán bằng thẻ tín dụng
-                                </label>
+                            {/* Hình thức thanh toán */}
+                            <div className="payment-section">
+                                <h5>Hình thức thanh toán</h5>
+                                <div className="payment-option">
+                                    <input
+                                        type="radio"
+                                        id="payment-after"
+                                        name="payment"
+                                        value="after"
+                                        defaultChecked
+                                    />
+                                    <label htmlFor="payment-after">
+                                        Thanh toán sau tại cơ sở y tế
+                                    </label>
+                                </div>
+
+                                <div className="payment-option">
+                                    <input
+                                        type="radio"
+                                        id="payment-after"
+                                        name="payment"
+                                        value="after"
+                                        defaultChecked
+                                    />
+                                    <label htmlFor="payment-after">
+                                        Thanh toán bằng thẻ tín dụng
+                                    </label>
+                                </div>
+
+                                <div className="payment-option">
+                                    <input
+                                        type="radio"
+                                        id="payment-after"
+                                        name="payment"
+                                        value="after"
+                                        defaultChecked
+                                    />
+                                    <label htmlFor="payment-after">
+                                        Thanh toán bằng chuyển khoản
+                                    </label>
+                                </div>
                             </div>
 
-                            <div className="payment-option">
-                                <input
-                                    type="radio"
-                                    id="payment-after"
-                                    name="payment"
-                                    value="after"
-                                    defaultChecked
-                                />
-                                <label htmlFor="payment-after">
-                                    Thanh toán bằng chuyển khoản
-                                </label>
+                            {/* Bảng giá */}
+                            <div className="price-table">
+                                <table className="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Giá khám</td>
+                                            <td className="text-right">
+                                                300.000đ
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phí đặt lịch</td>
+                                            <td className="text-right">
+                                                Miễn phí
+                                            </td>
+                                        </tr>
+                                        <tr className="total-row">
+                                            <td>
+                                                <strong>Tổng cộng</strong>
+                                            </td>
+                                            <td className="text-right text-danger">
+                                                <strong>300.000đ</strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p className="note-text text-center">
+                                    Quý khách vui lòng điền đầy đủ thông tin để
+                                    tiết kiệm thời gian làm thủ tục khám
+                                </p>
+                            </div>
+
+                            {/* Lưu ý */}
+                            <div className="notice-section">
+                                <h6>LƯU Ý</h6>
+                                <p>
+                                    Thông tin anh/chị cung cấp sẽ được sử dụng
+                                    làm hồ sơ khám bệnh, khi điền thông tin
+                                    anh/chị vui lòng:
+                                </p>
+                                <ul>
+                                    <li>
+                                        Ghi rõ họ và tên, viết hoa những chữ cái
+                                        đầu tiên, ví dụ:{" "}
+                                        <strong>Trần Văn Phú</strong>
+                                    </li>
+                                    <li>
+                                        Điền đầy đủ, đúng và vui lòng kiểm tra
+                                        lại thông tin trước khi ấn "Xác nhận"
+                                    </li>
+                                </ul>
                             </div>
                         </div>
 
-                        {/* Bảng giá */}
-                        <div className="price-table">
-                            <table className="table">
-                                <tbody>
-                                    <tr>
-                                        <td>Giá khám</td>
-                                        <td className="text-right">300.000đ</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phí đặt lịch</td>
-                                        <td className="text-right">Miễn phí</td>
-                                    </tr>
-                                    <tr className="total-row">
-                                        <td>
-                                            <strong>Tổng cộng</strong>
-                                        </td>
-                                        <td className="text-right text-danger">
-                                            <strong>300.000đ</strong>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <p className="note-text text-center">
-                                Quý khách vui lòng điền đầy đủ thông tin để tiết
-                                kiệm thời gian làm thủ tục khám
-                            </p>
-                        </div>
-
-                        {/* Lưu ý */}
-                        <div className="notice-section">
-                            <h6>LƯU Ý</h6>
-                            <p>
-                                Thông tin anh/chị cung cấp sẽ được sử dụng làm
-                                hồ sơ khám bệnh, khi điền thông tin anh/chị vui
-                                lòng:
-                            </p>
-                            <ul>
-                                <li>
-                                    Ghi rõ họ và tên, viết hoa những chữ cái đầu
-                                    tiên, ví dụ: <strong>Trần Văn Phú</strong>
-                                </li>
-                                <li>
-                                    Điền đầy đủ, đúng và vui lòng kiểm tra lại
-                                    thông tin trước khi ấn "Xác nhận"
-                                </li>
-                            </ul>
+                        {/*Footer*/}
+                        <div className="booking-modal-footer">
+                            <button
+                                className="btn-booking-confirm"
+                                onClick={() => this.handleConfirmBooking()}>
+                                <FormattedMessage id="patient.booking-modal.btn-confirm" />
+                            </button>
+                            <button
+                                className="btn-booking-cancel"
+                                onClick={CloseBookingModal}>
+                                <FormattedMessage id="patient.booking-modal.btn-cancel" />
+                            </button>
                         </div>
                     </div>
-
-                    {/*Footer*/}
-                    <div className="booking-modal-footer">
-                        <button
-                            className="btn-booking-confirm"
-                            onClick={() => this.handleConfirmBooking()}>
-                            <FormattedMessage id="patient.booking-modal.btn-confirm" />
-                        </button>
-                        <button
-                            className="btn-booking-cancel"
-                            onClick={CloseBookingModal}>
-                            <FormattedMessage id="patient.booking-modal.btn-cancel" />
-                        </button>
-                    </div>
-                </div>
-            </Modal>
+                </Modal>
+            </LoadingOverlay>
         );
     }
 }

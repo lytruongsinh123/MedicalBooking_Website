@@ -19,37 +19,37 @@ class Handbook extends Component {
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 1</div>
                                 </div>
                             </div>
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 2</div>
                                 </div>
                             </div>
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 3</div>
                                 </div>
                             </div>
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 4</div>
                                 </div>
                             </div>
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 5</div>
                                 </div>
                             </div>
                             <div className="section-customize">
                                 <div className="Handbook-body">
                                     <div className="bg-image section-handbook" />
-                                    <div className="name-spacialty">Khoa Xương Khớp</div>
+                                    <div className="name-spacialty">Cẩm nang 6</div>
                                 </div>
                             </div>
                         </Slider>
