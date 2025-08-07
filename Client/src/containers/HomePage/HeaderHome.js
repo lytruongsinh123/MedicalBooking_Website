@@ -6,29 +6,64 @@ import { withRouter } from "react-router";
 import "./HeaderHome.scss";
 import { languages } from "../../utils/constant";
 import { changeLanguageApp } from "../../store/actions";
+import { emitter } from "../../utils/emitter";
+
 class HeaderHome extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            listClinics: [],
+            listSpecialties: [],
+        };
+    }
     changeLanguage = (language) => {
         // fire redux event : action
         this.props.changeLanguageAppRedux(language);
     };
-    returnToHome = () =>
-    {
+    returnToHome = () => {
         if (this.props.history) {
             this.props.history.push("/home");
         }
+    };
+    handleLinkTo = (type, data) => {
+        this.props.history.push({
+            pathname: "/more",
+            state: { dataList: data, type: type },
+        });
+    };
+    componentDidMount() {
+        emitter.on("SEND_CLINIC_DATA", (dataClinics) => {
+            if (dataClinics && dataClinics.length > 0) {
+                this.setState({
+                    listClinics: dataClinics,
+                });
+            }
+        });
+        emitter.on("SEND_SPECIALTY_DATA", (dataSpecialty) => {
+            if (dataSpecialty && dataSpecialty.length > 0) {
+                this.setState({
+                    listSpecialties: dataSpecialty,
+                });
+            }
+        });
     }
     render() {
         let language = this.props.language; // lấy trong redux ko phải props
+        let { listClinics, listSpecialties } = this.state;
         return (
             <React.Fragment>
                 <div className="home_header-container">
                     <div className="home-header-content">
                         <div className="left-content">
                             <i className="fas fa-bars"></i>
-                            <div className="header-logo" onClick={()=>this.returnToHome()}></div>
+                            <div
+                                className="header-logo"
+                                onClick={() => this.returnToHome()}></div>
                         </div>
                         <div className="center-content">
-                            <div className="child-content">
+                            <div
+                                className="child-content"
+                                onClick={() => this.handleLinkTo("specialty", listSpecialties)}>
                                 <div className="hhhhhh">
                                     <b>
                                         <FormattedMessage id="home-header.speciality" />
@@ -38,7 +73,8 @@ class HeaderHome extends Component {
                                     <FormattedMessage id="home-header.search-doctor" />
                                 </div>
                             </div>
-                            <div className="child-content">
+                            <div className="child-content"
+                                onClick={() => this.handleLinkTo("clinic" , listClinics)}>
                                 <div className="hhhhhh">
                                     <b>
                                         <FormattedMessage id="home-header.health-facility" />
@@ -79,13 +115,11 @@ class HeaderHome extends Component {
                                     language === languages.VI
                                         ? "language-vn active"
                                         : "language-vn"
-                                }
-                            >
+                                }>
                                 <span
                                     onClick={() =>
                                         this.changeLanguage(languages.VI)
-                                    }
-                                >
+                                    }>
                                     <b>VN</b>
                                 </span>
                             </div>
@@ -94,13 +128,11 @@ class HeaderHome extends Component {
                                     language === languages.EN
                                         ? "language-en active"
                                         : "language-en"
-                                }
-                            >
+                                }>
                                 <span
                                     onClick={() =>
                                         this.changeLanguage(languages.EN)
-                                    }
-                                >
+                                    }>
                                     <b>EN</b>
                                 </span>
                             </div>
@@ -199,4 +231,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default withRouter (connect(mapStateToProps, mapDispatchToProps)(HeaderHome));
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(HeaderHome)
+);

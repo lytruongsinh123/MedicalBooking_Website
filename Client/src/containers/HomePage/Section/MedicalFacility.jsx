@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { languages } from "../../../utils";
 import { withRouter } from "react-router";
 import { getAllClinicService } from "../../../services/userService";
+import { emitter } from "../../../utils/emitter";
 class MedicalFacility extends Component {
     constructor(props) {
         super(props);
@@ -28,8 +29,18 @@ class MedicalFacility extends Component {
             this.props.history.push(`/detail-clinic/${item.id}`);
         }
     };
+    handleLinkToMore = () => {
+        if (this.props.history) {
+            this.props.history.push({
+                pathname: "/more",
+                state: { dataList: this.state.dataClinics, type: "clinic" },
+            });
+        }
+    };
     render() {
         let { dataClinics } = this.state;
+        emitter.emit("SEND_CLINIC_DATA", this.state.dataClinics);
+
         return (
             <div className="section-share section-medical-facility">
                 <div className="section-container">
@@ -37,7 +48,9 @@ class MedicalFacility extends Component {
                         <span className="title-section">
                             <FormattedMessage id="homepage.health-facility" />
                         </span>
-                        <button className="btn-section">
+                        <button
+                            className="btn-section"
+                            onClick={() => this.handleLinkToMore()}>
                             <FormattedMessage id="homepage.more-info" />
                         </button>
                     </div>

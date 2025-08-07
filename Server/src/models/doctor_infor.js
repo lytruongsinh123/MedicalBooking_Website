@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: "Doctor_Infor",
             freezeTableName: true,
+            tableName: "doctor_infor" // chỉ định các lệnh SQL với tên này
         }
     );
     return Doctor_Infor;

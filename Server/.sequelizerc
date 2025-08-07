@@ -1,7 +1,7 @@
 // Cấu hình đề sequelize biết nơi nào để cấu hình 
 const path = require('path');
 module.exports = {
-  'config': path.resolve('./src/config', 'config.json'), // Nói cho sequelize biết làm sao để kết nối được đến database 
+  'config': path.resolve('./src/config', 'config.js'), // Nói cho sequelize biết làm sao để kết nối được đến database 
   'migrations-path': path.resolve('./src', 'migrations'), // Tạo bảng trong database
   'models-path': path.resolve('./src', 'models'), // sequelize tạo model trong mô hình MVC
   'seeders-path': path.resolve('./src', 'seeders') // Tạo dữ liệu fake

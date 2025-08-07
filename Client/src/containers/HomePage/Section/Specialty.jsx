@@ -6,7 +6,7 @@ import { languages } from "../../../utils";
 import { FormattedMessage } from "react-intl";
 import { getAllSpecialtyService } from "../../../services/userService";
 import { withRouter } from "react-router";
-
+import { emitter } from "../../../utils/emitter";
 class Specialty extends Component {
     constructor(props) {
         super(props);
@@ -28,8 +28,17 @@ class Specialty extends Component {
             this.props.history.push(`/detail-specialty/${specialty.id}`);
         }
     };
+    handleLinkToMore = () => {
+        if (this.props.history) {
+            this.props.history.push({
+                pathname: "/more",
+                state: { dataList: this.state.dataSpecialty, type: "specialty" },
+            });
+        }
+    };
     render() {
         let { dataSpecialty } = this.state;
+        emitter.emit("SEND_SPECIALTY_DATA", this.state.dataSpecialty);
         return (
             <div className="section-share section-specialty">
                 <div className="section-container">
@@ -37,7 +46,9 @@ class Specialty extends Component {
                         <span className="title-section">
                             <FormattedMessage id="homepage.speciality" />
                         </span>
-                        <button className="btn-section">Xem thêm</button>
+                        <button className="btn-section" onClick={() => this.handleLinkToMore()}>
+                            <FormattedMessage id="homepage.more-info" />
+                        </button>
                     </div>
 
                     <div className="section-body">

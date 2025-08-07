@@ -29,6 +29,14 @@ class OutstandingDoctor extends Component {
             this.props.history.push(`/detail-doctor/${doctor.id}`);
         }
     };
+    handleLinkToMore = () => {
+        if (this.props.history) {
+            this.props.history.push({
+                pathname: "/more",
+                state: { dataList: this.state.arrDoctors, type: "doctor" },
+            });
+        }
+    };
     render() {
         let arrDoctors = this.state.arrDoctors;
         let { language } = this.props;
@@ -40,7 +48,7 @@ class OutstandingDoctor extends Component {
                         <span className="title-section">
                             <FormattedMessage id="homepage.outstanding-doctor" />
                         </span>
-                        <button className="btn-section">
+                        <button className="btn-section" onClick={() => this.handleLinkToMore()}>
                             <FormattedMessage id="homepage.more-info" />
                         </button>
                     </div>

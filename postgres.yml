@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-20072005h}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5436:5432"
+    restart: unless-stopped
+  
+volumes:
+    postgres:
+
+#docker-compose -f postgres.yml -p hoidanit-postgres up --build -d

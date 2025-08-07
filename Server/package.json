@@ -26,6 +26,8 @@
     "mysql2": "^3.14.1",
     "node-fetch": "^2.7.0",
     "nodemailer": "6.6.3",
+    "pg": "8.7.1",
+    "pg-hstore": "2.3.4",
     "sequelize": "^6.6.2",
     "uuid": "8.3.2"
   },
