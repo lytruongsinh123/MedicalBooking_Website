@@ -17,8 +17,13 @@ module.exports = {
                           require: true,
                           rejectUnauthorized: false,
                       },
+                      keepAlive: true,
+                      connectionTimeoutMillis: 30000,
                   }
-                : {},
+                : {
+                      keepAlive: true,
+                      connectionTimeoutMillis: 30000,
+                  },
         timezone: "+07:00",
     },
     test: {

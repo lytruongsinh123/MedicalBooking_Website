@@ -1,39 +1,51 @@
-'use strict';
-require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+"use strict";
+require("dotenv").config();
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 // const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
 const customizeConfig = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  dialect: 'postgres',
-  logging: false,
-  dialectOptions:
-    process.env.DB_SSL === 'true' ?
-      {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false
-        }
-      } : {}
-  ,
-  query: {
-    "raw": true
-  },
-  timezone: "+07:00"
-}
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: "postgres",
+    logging: false,
+    dialectOptions:
+        process.env.DB_SSL === "true"
+            ? {
+                  ssl: {
+                      require: true,
+                      rejectUnauthorized: false,
+                  },
+                  keepAlive: true,
+                  connectionTimeoutMillis: 30000,
+              }
+            : {
+                  keepAlive: true,
+                  connectionTimeoutMillis: 30000,
+              },
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000,
+    },
+    query: {
+        raw: true,
+    },
+    timezone: "+07:00",
+};
 
 sequelize = new Sequelize(
-  process.env.DB_DATABASE_NAME,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
-  customizeConfig);
+    process.env.DB_DATABASE_NAME,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD,
+    customizeConfig
+);
 
 // if (config.use_env_variable) {
 //   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -42,20 +54,26 @@ sequelize = new Sequelize(
 //   sequelize = new Sequelize(config.database, config.username, config.password, config);
 // }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+fs.readdirSync(__dirname)
+    .filter((file) => {
+        return (
+            file.indexOf(".") !== 0 &&
+            file !== basename &&
+            file.slice(-3) === ".js"
+        );
+    })
+    .forEach((file) => {
+        const model = require(path.join(__dirname, file))(
+            sequelize,
+            Sequelize.DataTypes
+        );
+        db[model.name] = model;
+    });
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
 db.sequelize = sequelize;
