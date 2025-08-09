@@ -272,7 +272,7 @@ let bulkCreateSchedule = (data) => {
                 let existing = await db.Schedule.findAll({
                     where: {
                         doctorId: data.doctorId,
-                        date: data.date,
+                        date: String(data.date),
                     },
                     attributes: ["timeType", "date", "doctorId", "maxNumber"],
                     raw: true,
@@ -542,7 +542,7 @@ let sendRemedy = async (data) => {
                         patientId: data.patientId,
                         doctorId: data.doctorId,
                         timeType: data.timeType,
-                        date: data.date,
+                        date: String(data.date),
                         statusId: "S2", // trạng thái đã xác nhận
                     },
                     raw: false, // trả về đối tượng của sequelize

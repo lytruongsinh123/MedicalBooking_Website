@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "engines": {
-        "node": "16.x"
+        "node": "20.x"
     },
     "dependencies": {
         "@formatjs/intl-pluralrules": "^3.5.6",
@@ -51,8 +51,8 @@
         "webpack": "4.44.2"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "start": "react-scripts --openssl-legacy-provider start",
+        "build": "react-scripts --openssl-legacy-provider build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -79,7 +79,7 @@
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^12.1.5",
         "@testing-library/user-event": "^13.5.0",
-        "babel-loader": "^8.1.0",
+        "babel-loader": "8.1.0",
         "redux-mock-store": "^1.5.5"
     }
 }
