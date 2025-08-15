@@ -2,7 +2,7 @@ name: Ping Render
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # Mỗi 5 phút
+    - cron: "*/2 * * * *" # Mỗi 2 phút
   workflow_dispatch:
 
 jobs:
