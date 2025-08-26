@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec npx babel-node src/server.js"
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon --exec npx babel-node src/server.js",
+    "start": "node dist/server.js"
   },
   "keywords": [
     "fullstack",
@@ -32,6 +34,7 @@
     "uuid": "8.3.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.28.3",
     "@babel/core": "^7.12.10",
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.10",

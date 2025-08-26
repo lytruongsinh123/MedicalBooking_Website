@@ -1,0 +1,13 @@
+name: Ping Render
+
+on:
+  schedule:
+    - cron: "*/2 * * * *" # Mỗi 2 phút
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send request to Render app
+        run: curl -s https://hung-booking-care.onrender.com > /dev/null
