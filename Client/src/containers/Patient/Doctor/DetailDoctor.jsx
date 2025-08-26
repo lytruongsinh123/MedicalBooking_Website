@@ -10,6 +10,7 @@ import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfor from "./DoctorExtraInfor";
 import LikeAndShare from "../SocialPlugin/LikeAndShare";
 import Comment from "../SocialPlugin/Comment";
+import LoadingOverlay from "react-loading-overlay";
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
@@ -53,62 +54,69 @@ class DetailDoctor extends Component {
         console.log("currentURL", currentURL);
         return (
             <>
-                <HeaderHome isShowBanner={false} />
-                <div className="doctor-detail-container">
-                    <div className="intro-doctor">
-                        <div
-                            className="content-left"
-                            style={{
-                                backgroundImage: `url(${
-                                    detailDoctor && detailDoctor.image
-                                        ? detailDoctor.image
-                                        : ""
-                                })`,
-                            }}></div>
-                        <div className="content-right">
-                            <div className="up">
-                                {language === languages.VI ? nameVi : nameEn}
-                            </div>
-                            <div className="down">
-                                {detailDoctor.Markdown &&
-                                    detailDoctor.Markdown.description && (
-                                        <span>
-                                            {detailDoctor.Markdown.description}
-                                        </span>
-                                    )}
-                                <div className="like-share-plugin">
-                                    <LikeAndShare dataHref={currentURL} />
+                <LoadingOverlay>
+                    <HeaderHome isShowBanner={false} />
+                    <div className="doctor-detail-container">
+                        <div className="intro-doctor">
+                            <div
+                                className="content-left"
+                                style={{
+                                    backgroundImage: `url(${
+                                        detailDoctor && detailDoctor.image
+                                            ? detailDoctor.image
+                                            : ""
+                                    })`,
+                                }}></div>
+                            <div className="content-right">
+                                <div className="up">
+                                    {language === languages.VI
+                                        ? nameVi
+                                        : nameEn}
+                                </div>
+                                <div className="down">
+                                    {detailDoctor.Markdown &&
+                                        detailDoctor.Markdown.description && (
+                                            <span>
+                                                {
+                                                    detailDoctor.Markdown
+                                                        .description
+                                                }
+                                            </span>
+                                        )}
+                                    <div className="like-share-plugin">
+                                        <LikeAndShare dataHref={currentURL} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="schedual-doctor">
-                        <div className="content-left">
-                            <DoctorSchedule
-                                doctorId={this.state.currentDoctorId}
-                            />
+                        <div className="schedual-doctor">
+                            <div className="content-left">
+                                <DoctorSchedule
+                                    doctorId={this.state.currentDoctorId}
+                                />
+                            </div>
+                            <div className="content-right">
+                                <DoctorExtraInfor
+                                    doctorId={this.state.currentDoctorId}
+                                />
+                            </div>
                         </div>
-                        <div className="content-right">
-                            <DoctorExtraInfor
-                                doctorId={this.state.currentDoctorId}
-                            />
+                        <div className="detail-infor-doctor">
+                            {detailDoctor &&
+                                detailDoctor.Markdown &&
+                                detailDoctor.Markdown.contentHTML && (
+                                    <div
+                                        dangerouslySetInnerHTML={{
+                                            __html: detailDoctor.Markdown
+                                                .contentHTML,
+                                        }}></div>
+                                )}
+                        </div>
+                        <div className="comment-doctor">
+                            <Comment dataHref={currentURL} width={"100%"} />
                         </div>
                     </div>
-                    <div className="detail-infor-doctor">
-                        {detailDoctor &&
-                            detailDoctor.Markdown &&
-                            detailDoctor.Markdown.contentHTML && (
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: detailDoctor.Markdown
-                                            .contentHTML,
-                                    }}></div>
-                            )}
-                    </div>
-                    <div className="comment-doctor">
-                        <Comment dataHref={currentURL} width={"100%"} />
-                    </div>
-                </div>
+                </LoadingOverlay>
             </>
         );
     }
