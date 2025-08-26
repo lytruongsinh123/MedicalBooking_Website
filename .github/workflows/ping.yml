@@ -1,4 +1,4 @@
-name: Ping Render
+name: Ping Azure and React App
 
 on:
   schedule:
@@ -9,5 +9,8 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Send request to Render app
-        run: curl -s https://hung-booking-care.onrender.com > /dev/null
+      - name: Ping backend (Azure App Service)
+        run: curl -fsS https://medicalbookingcare-bfgwepd5gmd3c5ga.koreacentral-01.azurewebsites.net -o /dev/null
+
+      - name: Ping frontend (React App)
+        run: curl -fsS https://bookingcare.hungproject.app -o /dev/null
